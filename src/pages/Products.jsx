@@ -8,7 +8,7 @@ import { FaHeart, FaRegHeart } from 'react-icons/fa6'
 
 function Products() {
   const { category } = useParams()
-  const base = "/src/assets/products/"
+  const base = "./src/assets/products/"
 
   let [favourite, setFavourite] = useState(false)
   return (

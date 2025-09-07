@@ -3,7 +3,7 @@ import { category } from '../data'
 import CategoriesCard from '../components/CategoriesCard'
 
 function ChooseCategory() {
-  const base = "/src/assets/categories/"
+  const base = "./src/assets/categories/"
   return (
     <div className='w-full grid grid-cols-12 items-center justify-center py-10'>
       <div className='col-span-10 col-start-2 grid grid-cols-3 gap-10 sm:grid-cols-4'>

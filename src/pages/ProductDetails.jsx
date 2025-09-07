@@ -6,7 +6,7 @@
 
 // function ProductDetails(props) {
     
-//     const base = '/src/assets/stock/';
+//     const base = './src/assets/stock/';
 
 //     const params = useParams()
 //     const { id } = params;
