@@ -12,7 +12,6 @@ import { IoMdArrowDropdown } from 'react-icons/io'
 function Header() {
   let [input, setInput] = useState({ search: "", city: "" })
   let [responsiveNav, setResponsiveNav] = useState(false)
-  console.log(input)
   return (
     <header className='w-full grid bg-white'>
       <div id='topNavBar' className='w-full py-5 h-fit grid grid-cols-12 gap-5 bg-brand-light'>

@@ -8,7 +8,7 @@ import { CiFilter, CiGrid2H, CiGrid41 } from 'react-icons/ci'
 
 function Products() {
   const { category } = useParams()
-  const base = "/src/assets/products/"
+  const base = "/products/"
   const filteredProduct = products.filter((v) => v.category === category)
   let [input, setInput] = useState("")
   let [grid, setGrid] = useState(true)
@@ -57,22 +57,22 @@ function Products() {
 
           </div>
           <div className='grid grid-cols-3 gap-3.5'>
-          {
-            filteredProduct.length === 0 ? (
-              <p className='text-2xl text-center text-brand-primary font-medium'>Product Not Found</p>
-            ) :
-              filteredProduct.map((v, i) => {
-                return (
-                  grid ?
-                  <div className={`col-span-3`} key={i}>
-                    <ProductCard image={base + v.mainImage} price={v.price} title={v.title} productId={v.id}/>
-                  </div> :
-                  <div className={`col-span-1`} key={i}>
-                    <ProductSectionCard image={base+v.mainImage} price={v.price} title={v.title} productId={v.id}/>
-                  </div>
-                )
-              })
-          }
+            {
+              filteredProduct.length === 0 ? (
+                <p className='text-2xl text-center text-brand-primary font-medium'>Product Not Found</p>
+              ) :
+                filteredProduct.map((v, i) => {
+                  return (
+                    grid ?
+                      <div className={`col-span-3`} key={i}>
+                        <ProductCard image={base + v.mainImage} price={v.price} title={v.title} productId={v.id} />
+                      </div> :
+                      <div className={`col-span-1`} key={i}>
+                        <ProductSectionCard image={base + v.mainImage} price={v.price} title={v.title} productId={v.id} />
+                      </div>
+                  )
+                })
+            }
           </div>
         </div>
       </div>

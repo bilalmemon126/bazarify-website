@@ -10,7 +10,7 @@ import Inbox from '../sections/Inbox'
 function Chat() {
     const { myId } = useParams()
     const { productId } = useParams()
-    const base = "/src/assets/products/"
+    const base = "/products/"
 
     let [input, setInput] = useState("")
 

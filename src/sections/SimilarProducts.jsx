@@ -3,7 +3,7 @@ import { products } from '../data'
 import ProductSectionCard from '../components/ProductSectionCard';
 
 function SimilarProducts({productId}) {
-    const base = "/src/assets/products/"
+    const base = "/products/"
     const productCategory = products[productId].category;
     return (
         <div className='col-span-12 grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-4'>

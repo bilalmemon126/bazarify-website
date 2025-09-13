@@ -3,7 +3,7 @@ import { products } from '../data'
 import ProductSectionCard from '../components/ProductSectionCard'
 
 function ProductSection() {
-    const base = "./src/assets/products/"
+    const base = "/products/"
     return (
         <div className='grid grid-cols-12'>
             <div className='w-full col-span-10 col-start-2 grid grid-cols-1 gap-2.5 sm:grid-cols-2 md:grid-cols-4'>
