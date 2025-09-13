@@ -1,7 +1,6 @@
 import React from 'react'
-import ProductCard from '../components/ProductCard'
 import { products } from '../data'
-import { NavLink } from 'react-router-dom'
+import ProductSectionCard from '../components/ProductSectionCard'
 
 function ProductSection() {
     const base = "./src/assets/products/"
@@ -14,7 +13,7 @@ function ProductSection() {
                         return v.category === "mobile"
                     }).map((v, i) => {
                         return (
-                            <ProductCard image={base + v.mainImage} price={v.price} title={v.title} key={i} />
+                            <ProductSectionCard image={base + v.mainImage} price={v.price} title={v.title} productId={v.id} key={i} />
                         )
                     })
                 }
@@ -25,7 +24,7 @@ function ProductSection() {
                         return v.category === "car"
                     }).map((v, i) => {
                         return (
-                            <ProductCard image={base + v.mainImage} price={v.price} title={v.title} key={i} />
+                            <ProductSectionCard image={base + v.mainImage} price={v.price} title={v.title} productId={v.id} key={i} />
                         )
                     })
                 }
@@ -36,7 +35,7 @@ function ProductSection() {
                         return v.category === "bike"
                     }).map((v, i) => {
                         return (
-                            <ProductCard image={base + v.mainImage} price={v.price} title={v.title} key={i} />
+                            <ProductSectionCard image={base + v.mainImage} price={v.price} title={v.title} productId={v.id} key={i} />
                         )
                     })
                 }
@@ -47,7 +46,7 @@ function ProductSection() {
                         return v.category === "electronic"
                     }).map((v, i) => {
                         return (
-                            <ProductCard image={base + v.mainImage} price={v.price} title={v.title} key={i} />
+                            <ProductSectionCard image={base + v.mainImage} price={v.price} title={v.title} productId={v.id} key={i} />
                         )
                     })
                 }
@@ -58,7 +57,7 @@ function ProductSection() {
                         return v.category === "fashion"
                     }).map((v, i) => {
                         return (
-                            <ProductCard image={base + v.mainImage} price={v.price} title={v.title} key={i} />
+                            <ProductSectionCard image={base + v.mainImage} price={v.price} title={v.title} productId={v.id} key={i} />
                         )
                     })
                 }
@@ -69,18 +68,7 @@ function ProductSection() {
                         return v.category === "house"
                     }).map((v, i) => {
                         return (
-                            <ProductCard image={base + v.mainImage} price={v.price} title={v.title} key={i} />
-                        )
-                    })
-                }
-
-                <h1 className='text-brand-primary text-3xl font-semibold col-span-1 py-5 sm:col-span-2 md:col-span-4'>Tablet</h1>
-                {
-                    products.filter((v, i) => {
-                        return v.category === "tablet"
-                    }).map((v, i) => {
-                        return (
-                            <ProductCard image={base + v.mainImage} price={v.price} title={v.title} key={i} />
+                            <ProductSectionCard image={base + v.mainImage} price={v.price} title={v.title} productId={v.id} key={i} />
                         )
                     })
                 }
@@ -91,7 +79,7 @@ function ProductSection() {
                         return v.category === "furniture"
                     }).map((v, i) => {
                         return (
-                            <ProductCard image={base + v.mainImage} price={v.price} title={v.title} key={i} />
+                            <ProductSectionCard image={base + v.mainImage} price={v.price} title={v.title} productId={v.id} key={i} />
                         )
                     })
                 }
@@ -102,7 +90,7 @@ function ProductSection() {
                         return v.category === "kids"
                     }).map((v, i) => {
                         return (
-                            <ProductCard image={base + v.mainImage} price={v.price} title={v.title} key={i} />
+                            <ProductSectionCard image={base + v.mainImage} price={v.price} title={v.title} productId={v.id} key={i} />
                         )
                     })
                 }

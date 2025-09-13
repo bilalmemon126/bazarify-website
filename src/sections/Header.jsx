@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import Logo from '../components/logo'
 import Button from '../components/Button'
+import profileVertor from '../assets/profile vector.jpg'
 import { HiPlus } from 'react-icons/hi'
 import { FiSearch } from 'react-icons/fi'
-import { IoLocationOutline } from 'react-icons/io5'
+import { IoChatbubbleEllipsesOutline, IoLocationOutline } from 'react-icons/io5'
 import { CiMenuFries } from 'react-icons/ci'
 import { NavLink } from 'react-router-dom'
+import { IoMdArrowDropdown } from 'react-icons/io'
 
 function Header() {
   let [input, setInput] = useState({ search: "", city: "" })
@@ -19,6 +21,15 @@ function Header() {
         </div>
         <div className='hidden grid-cols-2 gap-5 items-center justify-center sm:grid sm:col-span-4 sm:col-end-12 md:col-span-3 md:col-end-12'>
           <Button btnText={"Login"} btnPath={"/login"}/>
+          {/* <div className='col-span-1 w-full flex items-center gap-5'>
+            <IoChatbubbleEllipsesOutline  className='text-3xl text-brand-primary'/>
+            <div className='flex items-center'>
+              <div className='w-[40px] rounded-full overflow-hidden'>
+                <img src={profileVertor} alt="" />
+              </div>
+              <IoMdArrowDropdown className='text-2xl text-brand-primary'/>
+            </div>
+          </div> */}
           <Button btnIcon={<HiPlus />} btnText={"Sell"} btnPath={"/addproduct/choosecategory"} />
         </div>
         <div className='col-span-4 col-end-12 grid items-center justify-end sm:hidden'>

@@ -8,6 +8,8 @@ import OtpVerification from './pages/OtpVerification'
 import ForgotPassword from './pages/ForgotPassword'
 import ChooseCategory from './pages/ChooseCategory'
 import AddProduct from './pages/AddProduct'
+import ProductDetails from './pages/ProductDetails'
+import Chat from './pages/Chat'
 
 function App() {
   const router = createBrowserRouter([
@@ -47,10 +49,14 @@ function App() {
           path: "/addproduct/:category",
           element: <AddProduct />
         },
-        // {
-        //   path: "/productdetails/:id",
-        //   element: <ProductDetails />
-        // },
+        {
+          path: "/productdetails/:id",
+          element: <ProductDetails />
+        },
+        {
+          path: "/chat/:myId/:productId",
+          element: <Chat />
+        }
       ]
     }
   ])
