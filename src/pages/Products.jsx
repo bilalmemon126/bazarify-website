@@ -1,18 +1,33 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink, useParams } from 'react-router-dom'
 import Filter from '../sections/Filter'
-import { products } from '../data'
 import ProductSectionCard from '../components/ProductSectionCard'
 import ProductCard from '../components/ProductCard'
 import { CiFilter, CiGrid2H, CiGrid41 } from 'react-icons/ci'
+import { useDispatch, useSelector } from 'react-redux'
+import { getProducts } from '../redux/features/products/productAction'
 
 function Products() {
   const { category } = useParams()
-  const base = "/products/"
-  const filteredProduct = products.filter((v) => v.category === category)
+  const base = "../../../public/uploads/"
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getProducts())
+  }, [])
+
+  const { products, error, loading } = useSelector((state) => state.products)
+
+  let allProducts = Array.isArray(products) && products.filter((v, i) => { return v.category === category })
+
   let [input, setInput] = useState("")
   let [grid, setGrid] = useState(true)
-  return (
+
+  return loading ? (
+    <p>loading...</p>
+  ) :
+  (
     <div className='w-full grid grid-cols-12 gap-5'>
       <h1 className='text-3xl text-brand-primary font-semibold col-span-10 col-start-2 py-5'>{category.toUpperCase()}</h1>
       <div className='col-span-10 col-start-2 grid grid-cols-10 gap-5'>
@@ -58,17 +73,17 @@ function Products() {
           </div>
           <div className='grid grid-cols-3 gap-3.5'>
             {
-              filteredProduct.length === 0 ? (
+              allProducts.length === 0 ? (
                 <p className='text-2xl text-center text-brand-primary font-medium'>Product Not Found</p>
               ) :
-                filteredProduct.map((v, i) => {
+                allProducts.map((v, i) => {
                   return (
                     grid ?
                       <div className={`col-span-3`} key={i}>
-                        <ProductCard image={base + v.mainImage} price={v.price} title={v.title} productId={v.id} />
+                        <ProductCard image={base + v.mainImage[0].filename} price={v.price} title={v.title} productId={v._id} createdBy={v.createdBy} />
                       </div> :
                       <div className={`col-span-1`} key={i}>
-                        <ProductSectionCard image={base + v.mainImage} price={v.price} title={v.title} productId={v.id} />
+                        <ProductSectionCard image={base + v.mainImage[0].filename} price={v.price} title={v.title} productId={v._id} />
                       </div>
                   )
                 })

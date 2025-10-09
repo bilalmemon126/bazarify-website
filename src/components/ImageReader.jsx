@@ -1,7 +1,7 @@
 import React from 'react'
 
 export function MultipleFilesReader({inputName, inputStyle, setSelectedFiles, setImagePreviews }) {
-    let handleMainImage = (e) => {
+    let handleImages = (e) => {
         const files = Array.from(e.target.files);
         setSelectedFiles(files);
 
@@ -16,12 +16,12 @@ export function MultipleFilesReader({inputName, inputStyle, setSelectedFiles, se
         });
     }
     return (
-        <input type="file" className={inputStyle} name={inputName} onChange={(e) => { handleMainImage(e) }} accept='.jpg,.jpeg,.png,.webp' multiple required />
+        <input type="file" className={inputStyle} name={inputName} onChange={(e) => { handleImages(e) }} accept='.jpg,.jpeg,.png,.webp' multiple required />
     )
 }
 
 export function SingleFileReader({inputName, inputStyle, setSelectedFiles, setImagePreviews }) {
-    let handleImages = (e) => {
+    let handleMainImage = (e) => {
         const file = e.target.files[0];
         setSelectedFiles(file);
     
@@ -34,6 +34,6 @@ export function SingleFileReader({inputName, inputStyle, setSelectedFiles, setIm
         }
     };
     return (
-        <input type="file" className={inputStyle} name={inputName} onChange={(e) => { handleImages(e) }} accept='.jpg,.jpeg,.png,.webp' required />
+        <input type="file" className={inputStyle} name={inputName} onChange={(e) => { handleMainImage(e) }} accept='.jpg,.jpeg,.png,.webp' required />
     )
 }

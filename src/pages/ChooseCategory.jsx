@@ -13,7 +13,7 @@ function ChooseCategory() {
           <select
             name="category"
             value=""
-            onChange={(e) => { navigate(`/addproduct/${e.target.value}`) } }
+            onChange={(e) => { localStorage.setItem('category', e.target.value), navigate(`/addproduct/${e.target.value}`) } }
             className="w-full p-2.5 text-brand-primary border border-brand-dark rounded outline-none"
           >
             <option value="">Select Category</option>
@@ -21,6 +21,7 @@ function ChooseCategory() {
             <option value="car">Car</option>
             <option value="bike">Bike</option>
             <option value="house">House</option>
+            <option value="electronics">Electronics</option>
             <option value="tablet">Tablet</option>
             <option value="fashion">Fashion</option>
             <option value="furniture">Furniture</option>

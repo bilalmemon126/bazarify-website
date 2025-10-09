@@ -10,6 +10,7 @@ import ChooseCategory from './pages/ChooseCategory'
 import AddProduct from './pages/AddProduct'
 import ProductDetails from './pages/ProductDetails'
 import Chat from './pages/Chat'
+import MyAds from './pages/MyAds'
 
 function App() {
   const router = createBrowserRouter([
@@ -22,7 +23,7 @@ function App() {
       element: <Signup />
     },
     {
-      path: "/otpverification",
+      path: "/otpverification/:id",
       element: <OtpVerification />
     },
     {
@@ -54,8 +55,12 @@ function App() {
           element: <ProductDetails />
         },
         {
-          path: "/chat/:myId/:productId",
+          path: "/chat/:myId/:productId", 
           element: <Chat />
+        },
+        {
+          path: "/myads/:myid", 
+          element: <MyAds />
         }
       ]
     }

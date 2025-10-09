@@ -3,7 +3,7 @@ import Button from './Button'
 import { FaHeart, FaRegHeart } from 'react-icons/fa6'
 import { NavLink } from 'react-router-dom'
 
-function ProductCard({ image, price, title, location, productId }) {
+function ProductCard({ image, price, title, location, productId, createdBy }) {
     let [favourite, setFavourite] = useState(false)
     return (
         <div className='w-full h-auto sm:max-h-[200px] grid grid-cols-12 gap-5'>
@@ -26,7 +26,7 @@ function ProductCard({ image, price, title, location, productId }) {
                     <div className='h-fit grid grid-cols-2 gap-1.5'>
                         <p className='col-span-2'>{location}</p>
                         <Button btnText={"Call"} />
-                        <Button btnText={"Chat"} btnPath={`/chat/1/${productId}`} />
+                        <Button btnText={"Chat"} btnPath={`/chat/${createdBy}/${productId}`} />
                     </div>
                 </div>
 

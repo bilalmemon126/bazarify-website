@@ -6,30 +6,83 @@ import { HiPlus } from 'react-icons/hi'
 import { FiSearch } from 'react-icons/fi'
 import { IoChatbubbleEllipsesOutline, IoLocationOutline } from 'react-icons/io5'
 import { CiMenuFries } from 'react-icons/ci'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { IoMdArrowDropdown } from 'react-icons/io'
+import { FaRegHeart } from 'react-icons/fa'
+import { useDispatch } from 'react-redux'
+import { logoutUser } from '../redux/features/user/userAction'
+import profileVector from '../assets/profile vector.jpg'
+import { AiOutlineProduct } from 'react-icons/ai'
+import { BiLogOut } from 'react-icons/bi'
 
 function Header() {
   let [input, setInput] = useState({ search: "", city: "" })
   let [responsiveNav, setResponsiveNav] = useState(false)
+  let [isOpen, setIsOpen] = useState(false)
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const handleLogout = async () => {
+    const response = await dispatch(logoutUser())
+
+    if (response.payload.status) {
+      navigate("/login")
+    }
+  }
+
   return (
     <header className='w-full grid bg-white'>
       <div id='topNavBar' className='w-full py-5 h-fit grid grid-cols-12 gap-5 bg-brand-light'>
         <div className='col-span-4 col-start-2 grid items-center justify-start md:col-span-3 md:col-start-2'>
           <Logo />
         </div>
-        <div className='hidden grid-cols-2 gap-5 items-center justify-center sm:grid sm:col-span-4 sm:col-end-12 md:col-span-3 md:col-end-12'>
-          <Button btnText={"Login"} btnPath={"/login"}/>
-          {/* <div className='col-span-1 w-full flex items-center gap-5'>
-            <IoChatbubbleEllipsesOutline  className='text-3xl text-brand-primary'/>
-            <div className='flex items-center'>
-              <div className='w-[40px] rounded-full overflow-hidden'>
-                <img src={profileVertor} alt="" />
+        <div className='hidden grid-cols-5 gap-5 items-center justify-center sm:grid sm:col-span-5 sm:col-end-12 md:col-span-4 md:col-end-12 lg:col-span-3 lg:col-end-12'>
+          {
+            localStorage.getItem("userId") ?
+              <div className='col-span-3 w-full flex items-center gap-5'>
+                <IoChatbubbleEllipsesOutline className='text-3xl text-brand-primary' />
+                <FaRegHeart className='text-3xl' />
+                <div className='flex items-center'>
+                  <div className='w-[40px] rounded-full overflow-hidden'>
+                    <img src={profileVertor} alt="" />
+                  </div>
+                  <IoMdArrowDropdown className='text-2xl text-brand-primary' onClick={() => { setIsOpen(!isOpen) }} />
+                </div>
+
+              </div> :
+
+              <div className='col-span-2 col-start-2'>
+                <Button btnText={"Login"} btnPath={"/login"} />
               </div>
-              <IoMdArrowDropdown className='text-2xl text-brand-primary'/>
+          }
+          <div className={`${isOpen ? "block" : "hidden"} w-[300px] bg-white shadow-md rounded h-[300px] absolute top-20`} onClick={() => { setIsOpen(false) }}>
+            <div className='h-fit flex items-center gap-2.5 border-b p-2.5 border-brand-dark bg-white'>
+              <div className='w-fit h-fit rounded-full overflow-hidden'>
+                <img src={profileVector} className='w-[60px]' alt="" />
+              </div>
+              <div className='h-fit'>
+                <h2 className='text-xl text-brand-primary font-medium'>{localStorage.getItem("firstName")}</h2>
+                <p className='text-[12px] text-brand-primary font-medium'>View Public Profile</p>
+              </div>
             </div>
-          </div> */}
-          <Button btnIcon={<HiPlus />} btnText={"Sell"} btnPath={"/addproduct/choosecategory"} />
+            <div className='h-fit flex items-center gap-2.5 border-b p-2.5 border-brand-dark bg-white'>
+              <NavLink to={`/myads/${localStorage.getItem("userId")}`}>
+                <div className='h-fit flex gap-2.5 items-center'>
+                  <AiOutlineProduct className='text-2xl' />
+                  <p className='text-md text-brand-primary font-medium'>My Ads</p>
+                </div>
+              </NavLink>
+            </div>
+            <div className='h-fit flex items-center gap-2.5 border-b p-2.5 border-brand-dark bg-white'>
+              <BiLogOut className='text-2xl' />
+              <p className='text-md text-brand-primary font-medium cursor-pointer' onClick={handleLogout}>Logout</p>
+            </div>
+          </div>
+
+          <div className='col-span-2'>
+            <Button btnIcon={<HiPlus />} btnText={"Sell"} btnPath={"/addproduct/choosecategory"} />
+          </div>
         </div>
         <div className='col-span-4 col-end-12 grid items-center justify-end sm:hidden'>
           <CiMenuFries onClick={() => { setResponsiveNav(responsiveNav ? false : true) }} className='text-3xl text-white bg-brand-primary hover:bg-gray-700 p-2 rounded-full' />
@@ -57,7 +110,6 @@ function Header() {
         <div className="p-1.5 grid gap-2.5 grid-cols-12 col-span-5 col-end-12 items-center rounded-md bg-white outline-1 outline-brand-primary focus-within:outline-2">
           <div className="w-full px-2.5 col-span-3 sm:col-span-2 md:col-span-1"><FiSearch className='text-brand-primary text-lg' /></div>
           <input
-            id="price"
             name="search"
             type="text"
             placeholder="Search"
@@ -79,7 +131,11 @@ function Header() {
           <NavLink to={"/product/fashion"}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>Fashion</li></NavLink>
         </ul>
         <div className='mt-3 col-span-10 col-start-2 grid grid-cols-2 gap-5 items-center justify-center sm:hidden'>
-          <Button btnText={"Login"} />
+          {
+            localStorage.getItem("userId") ?
+              <Button btnText={"Logout"} handleEvent={handleLogout} /> :
+              <Button btnText={"Login"} />
+          }
           <Button btnIcon={<HiPlus />} btnText={"Sell"} />
         </div>
       </nav>
