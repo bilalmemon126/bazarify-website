@@ -1,8 +1,23 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import Button from './Button'
+import { useDispatch } from 'react-redux'
+import { deleteProduct } from '../redux/features/products/productAction'
 
-function MyAdsCard({ image, price, title, description, location, productId, createdBy, status }) {
+function MyAdsCard({ image, price, title, description, location, productId, category, createdBy, status }) {
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  
+  const handleDelete = async(productId) => {
+      let response =await dispatch(deleteProduct(productId))
+
+    if (response.payload.status) {
+        navigate('/')
+    }
+  }
+
     return (
         <div className='w-full h-auto md:max-h-[200px] grid grid-cols-12 gap-5'>
             <div className='h-auto max-h-[350px] col-span-12 overflow-hidden rounded-lg w-full flex items-center justify-center md:col-span-4 md:max-h-[200px]'>
@@ -12,18 +27,6 @@ function MyAdsCard({ image, price, title, description, location, productId, crea
             </div>
 
             <div className='grid gap-5 col-span-12 py-1.5 md:col-span-8'>
-                {/* <div className='h-fit grid grid-cols-6 gap-1.5 col-span-4'>
-                    <div className='col-span-5'>
-                        <p className='text-xl sm:text-3xl font-medium text-brand-primary'>Rs. {price}</p>
-                        <p className='text-sm sm:text-lg text-gray-700'>{title.slice(0, 58)}...</p>
-                    </div>
-                </div>
-                <div className='h-fit grid gap-1.5 col-span-2'>
-                    <p className='col-span-2'>{location}</p>
-                    <Button btnText={"Edit"} />
-                    <Button btnText={"Delete"} btnPath={`/chat/${createdBy}/${productId}`} />
-                </div> */}
-
                 <table className='w-full text-sm text-left grid gap-2.5 rtl:text-right text-gray-500 dark:text-gray-400'>
                     <thead className='h-fit py-5 w-full rounded text-xs uppercase bg-brand-light text-brand-primary text-center'>
                         <tr className='grid grid-cols-14'>
@@ -44,8 +47,8 @@ function MyAdsCard({ image, price, title, description, location, productId, crea
                 </table>
 
                 <div className='w-full grid grid-cols-2 gap-2.5'>
-                <Button btnText={"Edit"} btnPath={"/addproduct/bike"} />
-                <Button btnText={"Delete"} btnPath={`/chat/${createdBy}/${productId}`} />
+                <Button btnText={"Edit"} btnPath={`/editproduct/${category}/${productId}`} />
+                <Button btnText={"Delete"} handleEvent={() => {handleDelete(productId)}}/>
                 </div>
             </div>
 

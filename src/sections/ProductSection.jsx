@@ -26,7 +26,7 @@ function ProductSection() {
                         return v.category === "mobile"
                     }).map((v, i) => {
                         return (
-                            <ProductSectionCard image={base+v.mainImage[0].filename} price={v.price} title={v.title} productId={v._id} key={i} />
+                            <ProductSectionCard image={v.mainImage.secure_url} price={v.price} title={v.title} productId={v._id} key={i} />
                         )
                     })
                 }
@@ -37,7 +37,7 @@ function ProductSection() {
                         return v.category === "car"
                     }).map((v, i) => {
                         return (
-                            <ProductSectionCard image={base+v.mainImage[0].filename} price={v.price} title={v.title} productId={v._id} key={i} />
+                            <ProductSectionCard image={v.mainImage.secure_url} price={v.price} title={v.title} productId={v._id} key={i} />
                         )
                     })
                 }
@@ -48,7 +48,7 @@ function ProductSection() {
                         return v.category === "bike"
                     }).map((v, i) => {
                         return (
-                            <ProductSectionCard image={base+v.mainImage[0].filename} price={v.price} title={v.title} productId={v._id} key={i} />
+                            <ProductSectionCard image={v.mainImage.secure_url} price={v.price} title={v.title} productId={v._id} key={i} />
                         )
                     })
                 }
@@ -59,7 +59,7 @@ function ProductSection() {
                         return v.category === "electronics"
                     }).map((v, i) => {
                         return (
-                            <ProductSectionCard image={base+v.mainImage[0].filename} price={v.price} title={v.title} productId={v._id} key={i} />
+                            <ProductSectionCard image={v.mainImage.secure_url} price={v.price} title={v.title} productId={v._id} key={i} />
                         )
                     })
                 }
@@ -70,7 +70,7 @@ function ProductSection() {
                         return v.category === "fashion"
                     }).map((v, i) => {
                         return (
-                            <ProductSectionCard image={base+v.mainImage[0].filename} price={v.price} title={v.title} productId={v._id} key={i} />
+                            <ProductSectionCard image={v.mainImage.secure_url} price={v.price} title={v.title} productId={v._id} key={i} />
                         )
                     })
                 }
@@ -81,7 +81,7 @@ function ProductSection() {
                         return v.category === "house"
                     }).map((v, i) => {
                         return (
-                            <ProductSectionCard image={base+v.mainImage[0].filename} price={v.price} title={v.title} productId={v._id} key={i} />
+                            <ProductSectionCard image={v.mainImage.secure_url} price={v.price} title={v.title} productId={v._id} key={i} />
                         )
                     })
                 }
@@ -92,7 +92,7 @@ function ProductSection() {
                         return v.category === "furniture"
                     }).map((v, i) => {
                         return (
-                            <ProductSectionCard image={base+v.mainImage[0].filename} price={v.price} title={v.title} productId={v._id} key={i} />
+                            <ProductSectionCard image={v.mainImage.secure_url} price={v.price} title={v.title} productId={v._id} key={i} />
                         )
                     })
                 }
@@ -103,7 +103,7 @@ function ProductSection() {
                         return v.category === "kids"
                     }).map((v, i) => {
                         return (
-                            <ProductSectionCard image={base+v.mainImage[0].filename} price={v.price} title={v.title} productId={v._id} key={i} />
+                            <ProductSectionCard image={v.mainImage.secure_url} price={v.price} title={v.title} productId={v._id} key={i} />
                         )
                     })
                 }

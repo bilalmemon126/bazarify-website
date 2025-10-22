@@ -21,9 +21,9 @@ function MyAds() {
     const { products, error, loading } = useSelector((state) => state.products)
 
     let allProducts = Array.isArray(products) && products.filter((v, i) => { return v.createdBy === myid })
+    let activeProducts = allProducts && allProducts.filter((v, i) => { return v.status === "active" })
+    let inactiveProducts = allProducts && allProducts.filter((v, i) => { return v.status === "inactive" })
 
-    let activeProducts = allProducts.filter((v, i) => { return v.status === "active" })
-    let inactiveProducts = allProducts.filter((v, i) => { return v.status === "inactive" })
 
     return loading ? (
         <p>loading...</p>
@@ -54,39 +54,39 @@ function MyAds() {
 
                         <div className='grid gap-5 bg-brand-light p-5 rounded-xl'>
                             {
-                                allProducts.length === 0 ? (
+                                checkAds.viewAll && allProducts && allProducts.length === 0 ? (
                                     <p className='text-2xl text-center text-brand-primary font-medium'>Product Not Found</p>
                                 ) :
-                                    checkAds.viewAll && allProducts.map((v, i) => {
+                                    checkAds.viewAll && allProducts && allProducts.map((v, i) => {
                                         return (
                                             <div className='bg-white p-2.5 rounded-xl overflow-hidden' key={i}>
-                                                <MyAdsCard image={base + v.mainImage[0].filename} price={v.price} title={v.title} description={v.description} productId={v._id} createdBy={v.createdBy} status={v.status} />
+                                                <MyAdsCard image={v.mainImage.secure_url} price={v.price} title={v.title} description={v.description} productId={v._id} category={v.category} createdBy={v.createdBy} status={v.status} />
                                             </div>
                                         )
                                     })
                             }
 
                             {
-                                activeProducts.length === 0 ? (
+                                checkAds.activeAds && activeProducts && activeProducts.length === 0 ? (
                                     <p className='text-2xl text-center text-brand-primary font-medium'>Product Not Found</p>
                                 ) :
-                                    checkAds.activeAds && activeProducts.map((v, i) => {
+                                    checkAds.activeAds && activeProducts && activeProducts.length > 0 && activeProducts.map((v, i) => {
                                         return (
                                             <div className='bg-white p-2.5 rounded-xl overflow-hidden' key={i}>
-                                                <MyAdsCard image={base + v.mainImage[0].filename} price={v.price} title={v.title} description={v.description} productId={v._id} createdBy={v.createdBy} status={v.status} />
+                                                <MyAdsCard image={v.mainImage.secure_url} price={v.price} title={v.title} description={v.description} productId={v._id} category={v.category} createdBy={v.createdBy} status={v.status} />
                                             </div>
                                         )
                                     })
                             }
 
                             {
-                                inactiveProducts.length === 0 ? (
+                                checkAds.inactiveAds && inactiveProducts && inactiveProducts.length === 0 ? (
                                     <p className='text-2xl text-center text-brand-primary font-medium'>Product Not Found</p>
                                 ) :
-                                    checkAds.inactiveAds && inactiveProducts.map((v, i) => {
+                                    checkAds.inactiveAds && inactiveProducts && inactiveProducts.length > 0 && inactiveProducts.map((v, i) => {
                                         return (
                                             <div className='bg-white p-2.5 rounded-xl overflow-hidden' key={i}>
-                                                <MyAdsCard image={base + v.mainImage[0].filename} price={v.price} title={v.title} description={v.description} productId={v._id} createdBy={v.createdBy} status={v.status} />
+                                                <MyAdsCard image={v.mainImage.secure_url} price={v.price} title={v.title} description={v.description} productId={v._id} category={v.category} createdBy={v.createdBy} status={v.status} />
                                             </div>
                                         )
                                     })

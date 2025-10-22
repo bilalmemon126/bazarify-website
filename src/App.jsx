@@ -51,6 +51,10 @@ function App() {
           element: <AddProduct />
         },
         {
+          path: "/editproduct/:category/:productId",
+          element: <AddProduct />
+        },
+        {
           path: "/productdetails/:id",
           element: <ProductDetails />
         },

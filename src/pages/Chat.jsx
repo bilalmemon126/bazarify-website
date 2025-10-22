@@ -23,7 +23,6 @@ function Chat() {
     const { products, error, loading } = useSelector((state) => state.products)
 
     let productChat = Array.isArray(products) && products.filter((v, i) => { return v._id === productId })
-    // console.log(productChat.length > 0 ? productChat[0].title : "loading...")
 
 
     let [input, setInput] = useState("")
@@ -55,7 +54,7 @@ function Chat() {
                                     <div className='w-full border-b bg-white border-brand-dark grid grid-cols-6 items-center justify-between gap-2.5 p-2.5'>
                                         <div className='flex items-center gap-2.5 col-span-6 sm:col-span-4'>
                                             <div className='col-span-1 min-w-[60px] max-w-[80px] h-fit overflow-hidden grid items-center justify-center rounded'>
-                                                <img src={base + productChat[0].mainImage[0].filename} alt="" />
+                                                <img src={productChat[0].mainImage.secure_url} alt="" />
                                             </div>
                                             <div className='w-full min-w-[130px] h-fit col-span-3'>
                                                 <p className='text-[10px] sm:text-sm'>{productChat[0].title.slice(0, 36)}...</p>

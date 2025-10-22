@@ -1,10 +1,12 @@
 import React from 'react'
 
-export function MultipleFilesReader({inputName, inputStyle, setSelectedFiles, setImagePreviews }) {
+export function MultipleFilesReader({ inputName, inputStyle, setImagePreviews, setInput }) {
     let handleImages = (e) => {
         const files = Array.from(e.target.files);
-        setSelectedFiles(files);
-
+        setInput((prev) => ({
+            ...prev,
+            images: files
+        }))
         const previews = [];
         files.forEach(file => {
             const reader = new FileReader();
@@ -16,15 +18,18 @@ export function MultipleFilesReader({inputName, inputStyle, setSelectedFiles, se
         });
     }
     return (
-        <input type="file" className={inputStyle} name={inputName} onChange={(e) => { handleImages(e) }} accept='.jpg,.jpeg,.png,.webp' multiple required />
+        <input type="file" className={inputStyle} name={inputName} onChange={(e) => { handleImages(e) }} id='images' accept='.jpg,.jpeg,.png,.webp' multiple />
     )
 }
 
-export function SingleFileReader({inputName, inputStyle, setSelectedFiles, setImagePreviews }) {
+export function SingleFileReader({ inputName, inputStyle, setImagePreviews, setInput }) {
     let handleMainImage = (e) => {
         const file = e.target.files[0];
-        setSelectedFiles(file);
-    
+        setInput((prev) => ({
+            ...prev,
+            mainImage: file,
+        }))
+
         if (file) {
             const reader = new FileReader();
             reader.onload = () => {
@@ -34,6 +39,6 @@ export function SingleFileReader({inputName, inputStyle, setSelectedFiles, setIm
         }
     };
     return (
-        <input type="file" className={inputStyle} name={inputName} onChange={(e) => { handleMainImage(e) }} accept='.jpg,.jpeg,.png,.webp' required />
+        <input type="file" className={inputStyle} name={inputName} onChange={(e) => { handleMainImage(e) }} id='mainImage' accept='.jpg,.jpeg,.png,.webp' />
     )
 }

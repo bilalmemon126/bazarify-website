@@ -1,16 +1,15 @@
 import { useState } from 'react'
 
-function CardImages(props) {
-    const base = "../../../public/uploads/"
+function CardImages({images}) {
 
-    const [imageMove, setImageMove] = useState(props.images)
+    const [imageMove, setImageMove] = useState(images)
     const [imgChange, setImgChange] = useState(0)
 
     return (
         <>
             <div className='grid gap-y-2.5'>
                 <div className='w-full h-auto max-h-[500px] overflow-hidden grid items-center'>
-                    <img src={base+imageMove[imgChange].filename} className='w-full' alt="" />
+                    <img src={imageMove[imgChange].secure_url} className='w-full' alt="" />
                 </div>
 
                 <div className='w-full flex gap-5 items-center overflow-hidden bg-brand-light'>
@@ -18,7 +17,7 @@ function CardImages(props) {
                         imageMove.map((value, index) => {
                             return(
                                 <div className='w-fit max-h-[80px]' key={index}>
-                                    <img src={base+value.filename} className='w-[80px]' onClick={() => setImgChange(index)}/>
+                                    <img src={value.secure_url} className='w-[80px]' onClick={() => setImgChange(index)}/>
                                 </div>
                             )
                         })

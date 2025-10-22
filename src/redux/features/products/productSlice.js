@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addProduct, getProducts } from "./productAction";
+import { addProduct, deleteProduct, editProduct, getProducts } from "./productAction";
 
 export const productSlice = createSlice({
     name: "productSlice",
@@ -25,6 +25,7 @@ export const productSlice = createSlice({
             console.log(action.payload)
             state.error = action.payload
         })
+
         .addCase(getProducts.pending, (state) => {
             state.loading = true
         })
@@ -34,6 +35,36 @@ export const productSlice = createSlice({
 
         })
         .addCase(getProducts.rejected, (state, action) => {
+            state.loading = false
+            console.log(action.payload)
+            state.error = action.payload
+        })
+
+        .addCase(editProduct.pending, (state) => {
+            state.loading = true
+        })
+        .addCase(editProduct.fulfilled, (state, action) => {
+            state.loading = false
+            state.products = action.payload
+            console.log(action.payload)
+
+        })
+        .addCase(editProduct.rejected, (state, action) => {
+            state.loading = false
+            console.log(action.payload)
+            state.error = action.payload
+        })
+
+        .addCase(deleteProduct.pending, (state) => {
+            state.loading = true
+        })
+        .addCase(deleteProduct.fulfilled, (state, action) => {
+            state.loading = false
+            state.products = action.payload
+            console.log(action.payload)
+
+        })
+        .addCase(deleteProduct.rejected, (state, action) => {
             state.loading = false
             console.log(action.payload)
             state.error = action.payload

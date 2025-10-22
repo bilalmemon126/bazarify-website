@@ -9,7 +9,6 @@ import { getProducts } from '../redux/features/products/productAction'
 
 function Products() {
   const { category } = useParams()
-  const base = "../../../public/uploads/"
 
   const dispatch = useDispatch()
 
@@ -80,10 +79,10 @@ function Products() {
                   return (
                     grid ?
                       <div className={`col-span-3`} key={i}>
-                        <ProductCard image={base + v.mainImage[0].filename} price={v.price} title={v.title} productId={v._id} createdBy={v.createdBy} />
+                        <ProductCard image={v.mainImage.secure_url} price={v.price} title={v.title} productId={v._id} createdBy={v.createdBy} />
                       </div> :
                       <div className={`col-span-1`} key={i}>
-                        <ProductSectionCard image={base + v.mainImage[0].filename} price={v.price} title={v.title} productId={v._id} />
+                        <ProductSectionCard image={v.mainImage.secure_url} price={v.price} title={v.title} productId={v._id} />
                       </div>
                   )
                 })
