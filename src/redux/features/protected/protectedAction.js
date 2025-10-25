@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const protectedRoute = createAsyncThunk('protectedRoute', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch('https://bazarify-backend.vercel.app/protected', {
+        const response = await fetch('http://localhost:3001/protected', {
             method: "GET",
             credentials: "include"
         })
