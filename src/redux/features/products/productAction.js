@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const addProduct = createAsyncThunk('addProduct', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch(`http://localhost:3001/product/${localStorage.getItem('userId')}`, {
+        const response = await fetch(`https://bazarify-backend.vercel.app/product/${localStorage.getItem('userId')}`, {
             method: "POST",
             body: data,
             credentials: "include"
@@ -26,7 +26,7 @@ export const addProduct = createAsyncThunk('addProduct', async (data, {rejectWit
 
 export const getProducts = createAsyncThunk('getProducts', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch('http://localhost:3001/product', {
+        const response = await fetch('https://bazarify-backend.vercel.app/product', {
             method: "GET",
             credentials: "include"
         })
@@ -46,7 +46,7 @@ export const getProducts = createAsyncThunk('getProducts', async (data, {rejectW
 
 export const editProduct = createAsyncThunk('editProduct', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch(`http://localhost:3001/product/${localStorage.getItem('productId')}/${localStorage.getItem('userId')}`, {
+        const response = await fetch(`https://bazarify-backend.vercel.app/product/${localStorage.getItem('productId')}/${localStorage.getItem('userId')}`, {
             method: "PUT",
             body: data,
             credentials: "include"
@@ -71,7 +71,7 @@ export const editProduct = createAsyncThunk('editProduct', async (data, {rejectW
 export const deleteProduct = createAsyncThunk('deleteProduct', async (data, {rejectWithValue}) => {
     console.log(data)
     try{
-        const response = await fetch(`http://localhost:3001/product/${data}/${localStorage.getItem('userId')}`, {
+        const response = await fetch(`https://bazarify-backend.vercel.app/product/${data}/${localStorage.getItem('userId')}`, {
             method: "DELETE",
             credentials: "include"
         })

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 export const protectedRoute = createAsyncThunk('protectedRoute', async (data, {rejectWithValue}) => {
     // const navigate = useNavigate()
     try{
-        const response = await fetch('http://localhost:3001/protected', {
+        const response = await fetch('https://bazarify-backend.vercel.app/protected', {
             method: "GET",
             credentials: "include"
         })
