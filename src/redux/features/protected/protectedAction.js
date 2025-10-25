@@ -1,8 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { useNavigate } from "react-router-dom";
 
 export const protectedRoute = createAsyncThunk('protectedRoute', async (data, {rejectWithValue}) => {
-    // const navigate = useNavigate()
     try{
         const response = await fetch('https://bazarify-backend.vercel.app/protected', {
             method: "GET",
