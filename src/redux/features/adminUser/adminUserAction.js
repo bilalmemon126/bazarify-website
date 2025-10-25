@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit"
 
 export const adminGetUsers = createAsyncThunk('adminGetUsers', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch('http://localhost:3001/admin/user', {
+        const response = await fetch('https://bazarify-backend.vercel.app/admin/user', {
             method: "GET",
             credentials: "include"
         })
@@ -24,7 +24,7 @@ export const adminGetUsers = createAsyncThunk('adminGetUsers', async (data, {rej
 export const adminEditUsers = createAsyncThunk('adminEditUsers', async (data, {rejectWithValue}) => {
     console.log(data)
     try{
-        const response = await fetch(`http://localhost:3001/admin/user/${data}/${localStorage.getItem("adminId")}`, {
+        const response = await fetch(`https://bazarify-backend.vercel.app/admin/user/${data}/${localStorage.getItem("adminId")}`, {
             method: "PUT",
             credentials: "include"
         })

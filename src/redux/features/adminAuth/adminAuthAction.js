@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit"
 export const adminAuthLogin = createAsyncThunk('adminAuthLogin', async (data, {rejectWithValue}) => {
     try{
         console.log(data)
-        const response = await fetch('http://localhost:3001/admin/login', {
+        const response = await fetch('https://bazarify-backend.vercel.app/admin/login', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -29,7 +29,7 @@ export const adminAuthLogin = createAsyncThunk('adminAuthLogin', async (data, {r
 
 export const adminAuthLogout = createAsyncThunk('adminAuthLogout', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch('http://localhost:3001/admin/logout', {
+        const response = await fetch('https://bazarify-backend.vercel.app/admin/logout', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
