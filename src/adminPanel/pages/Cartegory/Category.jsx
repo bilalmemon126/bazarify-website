@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import './Category.css'
-import category from '../../Data/Category'
 
 function Category() {
     const [addCategory, setAddCategory] = useState("")
