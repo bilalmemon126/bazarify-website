@@ -1,5 +1,5 @@
 import React from 'react'
-import Logo from '../components/logo'
+import Logo from '../components/Logo'
 import { NavLink } from 'react-router-dom'
 import { FaFacebook, FaFacebookF, FaInstagram, FaXTwitter } from 'react-icons/fa6'
 import { CiFacebook } from 'react-icons/ci'
