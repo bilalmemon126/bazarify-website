@@ -1,0 +1,57 @@
+#responsiveSideBarBox{
+    width: 90%;
+    height: 85%;
+    border-radius: 10px;
+    margin: auto;
+    background-color: rgb(25, 25, 25);
+    padding: 10px;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+#responsiveSideBarBox .responsiveAdminLinksContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+#responsiveSideBarBox .responsiveAdminLinksContainer .responsiveTopHeadingBox h3{
+    color: white;
+}
+#responsiveSideBarBox .responsiveIconBox{
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+}
+#responsiveSideBarBox .responsiveIconBox:hover{
+    background-color: #616d88;
+}
+#responsiveSideBarBox .responsiveIconBox .responsiveIcons{
+    color: white;
+}
+#responsiveSideBarBox .settingBox{
+    width: 100%;
+}
+#responsiveSideBarBox .responsiveAdminLinksContainer .active{
+    background-color: #616d88;
+    border-radius: 5px;
+}
+
+@media only screen and (max-width: 576px){
+    #responsiveSideBarBox{
+        display: flex;
+    }
+}
+@media only screen and (min-width: 576px) and (max-width: 767px){
+    #responsiveSideBarBox{
+        display: flex;
+    }
+}
+@media only screen and (min-width: 767px) and (max-width: 991px){
+    
+}
+@media only screen and (min-width: 992px) and (max-width: 1200px){
+}

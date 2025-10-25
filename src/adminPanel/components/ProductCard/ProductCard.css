@@ -1,0 +1,109 @@
+#productCardContainer{
+    width: 100%;
+    max-width: 1200px;
+    background-color: black;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 10px;
+    gap: 10px;
+}
+#productCardContainer .navLinks{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+#productCardContainer .productMainImage{
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+}
+#productCardContainer .titleAndPrice{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    justify-content: space-between;
+    padding: 10px;
+}
+#productCardContainer .titleAndPrice p{
+    color: white;
+}
+#productCardContainer .editAndDeleteBtn{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+#productCardContainer .editAndDeleteBtn button{
+    width: 100px;
+    background-color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 3px;
+}
+#productCardContainer .editAndDeleteBtn .productDeleteBtn{
+    background-color: red;
+    color: white;
+}
+
+@media only screen and (max-width: 576px){
+    #productCardContainer{
+        flex-direction: column;
+        justify-content: center;
+    }
+    #productCardContainer .navLinks{
+        flex-direction: column;
+    }
+    #productCardContainer .productMainImage{
+        width: 100%;
+        height: auto;
+    }
+    #productCardContainer .titleAndPrice{
+        width: 100%;
+        gap: 15px;
+    }
+    #productCardContainer .editAndDeleteBtn{
+        width: 100%;
+    }
+    #productCardContainer .editAndDeleteBtn .navLinks{
+        width: 100%;
+    }
+    #productCardContainer .editAndDeleteBtn .navLinks .productEditBtn{
+        width: 100%;
+    }
+    #productCardContainer .editAndDeleteBtn .productDeleteBtn{
+        width: 100%;
+    }
+}
+@media only screen and (min-width: 576px) and (max-width: 767px){
+    #productCardContainer{
+        flex-direction: column;
+        justify-content: center;
+    }
+    #productCardContainer .navLinks{
+        flex-direction: column;
+    }
+    #productCardContainer .productMainImage{
+        width: 100%;
+        height: auto;
+    }
+    #productCardContainer .titleAndPrice{
+        width: 100%;
+        gap: 15px;
+    }
+    #productCardContainer .editAndDeleteBtn{
+        width: 100%;
+    }
+    #productCardContainer .editAndDeleteBtn .navLinks{
+        width: 100%;
+    }
+    #productCardContainer .editAndDeleteBtn .navLinks .productEditBtn{
+        width: 100%;
+    }
+    #productCardContainer .editAndDeleteBtn .productDeleteBtn{
+        width: 100%;
+    }
+}

@@ -1,0 +1,96 @@
+/* #header{
+    width: 100%;
+    padding: 20px 0;
+    display: flex;
+    background-color: black;
+}
+#header #headerContainer{
+    width: 90%;
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: auto;
+    gap: 20px;
+}
+#headerContainer #logoBox{
+    width: 20%;
+    max-width: 200px;
+} */
+#searchBar{
+    width: 350px;
+    display: flex;
+    justify-content: space-between;
+}
+#searchBar #searchInput{
+    width: 85%;
+    background-color: rgb(25, 25, 25);
+    border: none;
+    outline: none;
+    color: white;
+    border-radius: 5px 0 0 5px;
+    padding: 7px;
+}
+#searchBar .searchIcon{
+    width: 15%;
+    background-color: rgb(25, 25, 25);
+    padding: 5px;
+    font-size: 2rem;
+    color: white;
+    border-radius: 0 5px 5px 0;
+}
+/* #headerContainer #profileIcon{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+#headerContainer #profileIcon .userIcon{
+    width: 40px;
+    height: 40px;
+    border-radius: 25px;
+    background-color: rgb(25, 25, 25);
+    padding: 10px;
+    font-size: 1rem;
+    color: white;
+}
+#headerContainer #profileIcon p{
+    color: white;
+    font-size: 1rem;
+} */
+
+/* @media only screen and (max-width: 576px){
+    #headerContainer #logoBox{
+        width: 100px;
+    }
+    #headerContainer #searchBar{
+        width: 100px;
+        display: flex;
+        justify-content: space-between;
+    }
+    #headerContainer #profileIcon .userIcon{
+        width: 35px;
+        height: 35px;
+        padding: 7px;
+    }
+    #headerContainer #profileIcon p{
+        font-size: 0.7rem;
+    }
+}
+@media only screen and (min-width: 576px) and (max-width: 767px){
+    #headerContainer #logoBox{
+        width: 150px;
+    }
+    #headerContainer #searchBar{
+        width: 180px;
+        display: flex;
+        justify-content: space-between;
+    }
+    #headerContainer #profileIcon .userIcon{
+        width: 40px;
+        height: 40px;
+        padding: 7px;
+    }
+    #headerContainer #profileIcon p{
+        font-size: 0.8rem;
+    }
+} */

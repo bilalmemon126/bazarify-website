@@ -12,6 +12,13 @@ import ProductDetails from './pages/ProductDetails'
 import Chat from './pages/Chat'
 import MyAds from './pages/MyAds'
 
+import AdminLayout from './adminPanel/AdminLayout/AdminLayout'
+import Dashboard from './adminPanel/pages/Dashboard/Dashboard'
+import UserManagement from './adminPanel/pages/UserManagement/UserManagement'
+import ProductManagement from './adminPanel/pages/ProductManagement/ProductManagement'
+import Category from './adminPanel/pages/Cartegory/Category'
+import AdminLogin from './adminPanel/pages/AdminLogin'
+
 function App() {
   const router = createBrowserRouter([
     {
@@ -65,6 +72,33 @@ function App() {
         {
           path: "/myads/:myid", 
           element: <MyAds />
+        }
+      ]
+    },
+    
+    {
+      path: "/bazarify/adminlogin",
+      element: <AdminLogin />
+    },
+    {
+      path: "/bazarify/adminpanel",
+      element: <AdminLayout />,
+      children: [
+        {
+          path: "/bazarify/adminpanel",
+          element: <Dashboard />
+        },
+        {
+          path: "admin/usermanagement",
+          element: <UserManagement />
+        },
+        {
+          path: "admin/productmanagement",
+          element: <ProductManagement />
+        },
+        {
+          path: "admin/category",
+          element: <Category />
         }
       ]
     }

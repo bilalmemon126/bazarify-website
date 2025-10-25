@@ -1,0 +1,92 @@
+#userManagementContainer{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#userManagementContainer table{
+    width: 90%;
+    border-collapse: collapse;
+}
+#userManagementContainer table thead tr th{
+    text-align: left;
+    font-size: 1rem;
+    padding: 10px 50px;
+    background-color: black;
+    color: white;
+}
+#userManagementContainer table tbody tr:nth-child(even){
+    background-color: rgb(19, 19, 19);
+}
+#userManagementContainer table tbody tr:nth-child(odd){
+    background-color: rgb(15, 15, 15);
+}
+#userManagementContainer table tbody tr:hover{
+    background-color: rgb(10, 10, 10);
+}
+#userManagementContainer table tbody tr td{
+    padding: 10px 50px;
+    font-size: 1rem;
+    color: rgb(186, 186, 186);
+}
+#action{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+#action .actionBtn{
+    width: 80px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 2px;
+}
+#action .Block{
+    background-color: red;
+    color: white;
+}
+#action .UnBlock{
+    background-color: white;
+    color: black;
+}
+
+@media only screen and (max-width: 576px){
+    #userManagementContainer table{
+        width: 80%;
+    }
+    #userManagementContainer table thead tr th{
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+    #userManagementContainer table tbody tr td{
+        padding: 10px;
+        font-size: 0.8rem;
+    }
+    #action .actionBtn{
+        width: 50px;
+    }
+}
+@media only screen and (min-width: 576px) and (max-width: 767px){
+    #userManagementContainer table thead tr th{
+        padding: 10px 20px;
+    }
+    #userManagementContainer table tbody tr td{
+        padding: 10px 20px;
+    }
+    #action .actionBtn{
+        width: 60px;
+    }
+}
+@media only screen and (min-width: 767px) and (max-width: 991px){
+    #userManagementContainer table thead tr th{
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+    #userManagementContainer table tbody tr td{
+        padding: 10px;
+        font-size: 0.8rem;
+    }
+    #action .actionBtn{
+        width: 50px;
+    }
+}

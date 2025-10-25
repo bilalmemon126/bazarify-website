@@ -1,0 +1,55 @@
+/* #layoutContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+} */
+/* #AdminMainContainer{
+    width: 75%;
+    min-height: 100vh;
+    height: auto;
+    background-color: rgb(25, 25, 25);
+} */
+/* #mainPagesContainer{
+    width: 100%;
+    min-height: 90vh;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} */
+/* #sideBarContainer{
+    width: 25%;
+    height: 100vh;
+    background-color: black;
+    box-shadow: 0 0 10px black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    left: 0;
+} */
+
+/* @media only screen and (max-width: 576px){
+    #AdminMainContainer{
+        width: 85%;
+    }
+    #sideBarContainer{
+        width: 15%;
+    }
+} */
+/* @media only screen and (min-width: 576px) and (max-width: 767px){
+    #AdminMainContainer{
+        width: 90%;
+    }
+    #sideBarContainer{
+        width: 10%;
+    }
+}
+@media only screen and (min-width: 767px) and (max-width: 991px){
+    #AdminMainContainer{
+        width: 70%;
+    }
+    #sideBarContainer{
+        width: 30%;
+    }
+} */

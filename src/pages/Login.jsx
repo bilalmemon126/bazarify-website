@@ -20,6 +20,8 @@ function Login() {
 
     setInput({ email: "", password: "" })
   }
+
+  console.log(error)
   return (
     <>
       <div className='w-full h-screen flex items-center justify-center'>

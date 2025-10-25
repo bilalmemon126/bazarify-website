@@ -1,0 +1,51 @@
+#categoryContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+#categoryBox{
+    width: 90%;
+    border-radius: 10px;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+}
+#categoryBox form{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+
+}
+#categoryBox form .inputBox{
+    width: 100%;
+}
+#categoryBox form .inputBox label{
+    color: white;
+    font-size: 0.9rem;
+}
+#categoryBox form .inputs{
+    width: 100%;
+    height: 40px;
+    background-color: rgb(25, 25, 25);
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+#categoryBox form .addBtn{
+    width: 40%;
+    padding: 10px;
+    background-color: rgb(25, 25, 25);
+    border: none;
+    color: white;
+    border-radius: 5px;
+}
