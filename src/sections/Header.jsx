@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Logo from '../components/logo'
+import Logo from '../components/Logo'
 import Button from '../components/Button'
 import profileVertor from '../assets/profile vector.jpg'
 import { HiPlus } from 'react-icons/hi'

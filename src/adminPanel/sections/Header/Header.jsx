@@ -1,4 +1,4 @@
-import Logo from '../../../components/logo'
+import Logo from '../../../components/Logo'
 import { CiSearch, CiUser } from 'react-icons/ci'
 import logoImg from '../../../assets/bazarify logo white.png'
 
