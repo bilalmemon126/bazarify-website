@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { adminGetProducts } from '../../../redux/features/adminProduct/adminProductAction'
 import { useEffect } from 'react'
+import { adminGetUsers } from '../../../redux/features/adminUser/adminUserAction'
 
 function Dashboard() {
 
@@ -15,6 +16,7 @@ function Dashboard() {
   const dispatch = useDispatch()
 
   useEffect(() => {
+    dispatch(adminGetUsers())
     dispatch(adminGetProducts())
   }, [])
 

@@ -21,9 +21,6 @@ function SideBar() {
                 <NavLink to={"admin/productManagement"} className="navLinks">
                     <AdminLinks icon={<IoBagOutline className='adminLinksIcon' />} text="Product Management" />
                 </NavLink>
-                <NavLink to={"admin/ordermanagement"} className="navLinks">
-                    <AdminLinks icon={<MdOutlineShoppingCart className='adminLinksIcon' />} text="Order Management" />
-                </NavLink>
                 <NavLink to={"admin/category"} className="navLinks">
                     <AdminLinks icon={<MdOutlineCategory className='adminLinksIcon' />} text="Category" />
                 </NavLink>
