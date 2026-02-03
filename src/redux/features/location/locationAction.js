@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit"
 
 export const getLocation = createAsyncThunk('getLocation', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch(`http://localhost:3002/location`, {
+        const response = await fetch(`https://bazarify-website-backend.vercel.app/location`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

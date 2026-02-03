@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit"
 
 export const getFavouriteProducts = createAsyncThunk('getFavouriteProducts', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch(`http://localhost:3002/favourite/${localStorage.getItem("userId")}`, {
+        const response = await fetch(`https://bazarify-website-backend.vercel.app/favourite/${localStorage.getItem("userId")}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -24,7 +24,7 @@ export const getFavouriteProducts = createAsyncThunk('getFavouriteProducts', asy
 
 export const addFavouriteProducts = createAsyncThunk('addFavouriteProducts', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch(`http://localhost:3002/favourite/${data}/${localStorage.getItem("userId")}`, {
+        const response = await fetch(`https://bazarify-website-backend.vercel.app/favourite/${data}/${localStorage.getItem("userId")}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
