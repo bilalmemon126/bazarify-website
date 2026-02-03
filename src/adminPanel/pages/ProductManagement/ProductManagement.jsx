@@ -15,13 +15,8 @@ function ProductManagement() {
   }, [])
 
   const handleBlock = async (productId) => {
-    let response = await dispatch(adminEditProducts(productId))
-    if (response.payload.status) {
-      dispatch(adminGetProducts())
-    }
-    if (!response.payload.status) {
-      dispatch(adminGetProducts())
-    }
+    dispatch(adminEditProducts(productId))
+    dispatch(adminGetProducts())
   }
 
   return loading ?
@@ -30,13 +25,15 @@ function ProductManagement() {
       <div id="productManagementContainer">
         <div id="productManagementBox">
           {
-            products.length > 0 && products.map((v, i) => {
+            products?.data?.length > 0 ?
+            products?.data?.map((v, i) => {
               return (
                 <ProductCard
                   productId={v._id}
                   mainImage={v.mainImage.secure_url}
                   title={v.title.slice(0, 100) + "..."}
-                  price={v.price} key={i}
+                  price={v.price}
+                  key={i}
                   editAndDeleteBtn={
                     <>
                       <button className='text-red-500 font-bold' onClick={() => { handleBlock(v._id) }} >{v.isBlocked ? "UnBlock" : "Block"}</button>
@@ -44,7 +41,8 @@ function ProductManagement() {
                   }
                 />
               )
-            })
+            }) :
+            <p>Product Not Found</p>
           }
         </div>
       </div>

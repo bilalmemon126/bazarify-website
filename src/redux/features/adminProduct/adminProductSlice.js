@@ -12,32 +12,36 @@ export const adminProductSlice = createSlice({
     extraReducers: (builder) => {
         builder
         .addCase(adminGetProducts.pending, (state) => {
+            state.error = null
+            state.products = []
             state.loading = true
         })
         .addCase(adminGetProducts.fulfilled, (state, action) => {
+            state.error = null
             state.loading = false
             state.products = action.payload
-            console.log(action.payload)
 
         })
         .addCase(adminGetProducts.rejected, (state, action) => {
+            state.products = []
             state.loading = false
-            console.log(action.payload)
             state.error = action.payload
         })
 
         .addCase(adminEditProducts.pending, (state) => {
+            state.error = null
+            state.products = []
             state.loading = true
         })
         .addCase(adminEditProducts.fulfilled, (state, action) => {
+            state.error = null
             state.loading = false
-            state.products = action.payload
-            console.log(action.payload)
+            state.products = action.payload.data
 
         })
         .addCase(adminEditProducts.rejected, (state, action) => {
+            state.products = []
             state.loading = false
-            console.log(action.payload)
             state.error = action.payload
         })
     }

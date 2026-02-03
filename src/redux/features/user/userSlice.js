@@ -16,7 +16,6 @@ export const userSlice = createSlice({
             })
             .addCase(registerUser.fulfilled, (state, action) => {
                 state.loading = false;
-                console.log(action.payload)
                 state.user = action.payload;
                 localStorage.setItem("userId", action.payload.data._id)
                 localStorage.setItem("firstName", action.payload.data.firstName)
@@ -24,7 +23,6 @@ export const userSlice = createSlice({
             .addCase(registerUser.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
-                console.log(action.payload)
             })
 
             .addCase(otpVerification.pending, (state) => {
@@ -32,7 +30,6 @@ export const userSlice = createSlice({
             })
             .addCase(otpVerification.fulfilled, (state, action) => {
                 state.loading = false;
-                console.log(action.payload)
                 state.user = action.payload;
                 localStorage.setItem("userId", action.payload.data._id)
                 localStorage.setItem("firstName", action.payload.data.firstName)
@@ -40,7 +37,6 @@ export const userSlice = createSlice({
             .addCase(otpVerification.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
-                console.log(action.payload)
             })
 
             .addCase(loginUser.pending, (state) => {
@@ -48,7 +44,6 @@ export const userSlice = createSlice({
             })
             .addCase(loginUser.fulfilled, (state, action) => {
                 state.loading = false;
-                console.log("fulfilled", action.payload)
                 state.user = action.payload;
                 localStorage.setItem("userId", action.payload.data._id)
                 localStorage.setItem("firstName", action.payload.data.firstName)
@@ -56,7 +51,6 @@ export const userSlice = createSlice({
             .addCase(loginUser.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
-                console.log(action.payload)
             })
 
             .addCase(logoutUser.pending, (state) => {
@@ -64,7 +58,6 @@ export const userSlice = createSlice({
             })
             .addCase(logoutUser.fulfilled, (state, action) => {
                 state.loading = false;
-                console.log("fulfilled", action.payload)
                 state.user = action.payload;
             })
             .addCase(logoutUser.rejected, (state, action) => {

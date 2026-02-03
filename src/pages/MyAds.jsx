@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { FiSearch } from 'react-icons/fi'
 import { useDispatch, useSelector } from 'react-redux'
-import { getProducts } from '../redux/features/products/productAction'
+import { getHomeProducts, getProducts } from '../redux/features/products/productAction'
 import { useParams } from 'react-router-dom'
 import MyAdsCard from '../components/MyAdsCard'
 
@@ -10,20 +10,20 @@ function MyAds() {
     let [input, setInput] = useState("")
     let [checkAds, setCheckAds] = useState({ viewAll: true, activeAds: false, inactiveAds: false })
 
-    const base = "../../../public/uploads/"
-
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getProducts())
+        dispatch(getProducts({userId: myid}))
     }, [])
 
     const { products, error, loading } = useSelector((state) => state.products)
 
-    let allProducts = Array.isArray(products) && products.filter((v, i) => { return v.createdBy === myid })
-    let activeProducts = allProducts && allProducts.filter((v, i) => { return v.status === "active" })
-    let inactiveProducts = allProducts && allProducts.filter((v, i) => { return v.status === "inactive" })
+    let activeProducts = products?.data?.filter((v, i) => { return v.status === "active" })
+    let inactiveProducts = products?.data?.filter((v, i) => { return v.status === "inactive" })
 
+    if(!checkAds.activeAds && !checkAds.inactiveAds && !checkAds.viewAll){
+        setCheckAds((prev) => ({ ...prev, viewAll: true}))
+    }
 
     return loading ? (
         <p>loading...</p>
@@ -47,20 +47,20 @@ function MyAds() {
                         </div>
 
                         <div className='flex gap-2.5'>
-                            <div className={`w-fit py-2 px-3.5 text-[10px] cursor-pointer border border-brand-dark rounded-full sm:text-sm ${checkAds.viewAll ? "bg-brand-dark" : ""}`} onClick={() => { setCheckAds((prev) => ({ ...prev, viewAll: !checkAds.viewAll, activeAds: false, inactiveAds: false })) }}>View all [{allProducts.length}]</div>
-                            <div className={`w-fit py-2 px-3.5 text-[10px] cursor-pointer border border-brand-dark rounded-full sm:text-sm ${checkAds.activeAds ? "bg-brand-dark" : ""}`} onClick={() => { setCheckAds((prev) => ({ ...prev, activeAds: !checkAds.activeAds, viewAll: false, inactiveAds: false })) }}>Active Ads [{activeProducts.length}]</div>
-                            <div className={`w-fit py-2 px-3.5 text-[10px] cursor-pointer border border-brand-dark rounded-full sm:text-sm ${checkAds.inactiveAds ? "bg-brand-dark" : ""}`} onClick={() => { setCheckAds((prev) => ({ ...prev, inactiveAds: !checkAds.inactiveAds, viewAll: false, activeAds: false })) }}>Inactive Ads [{inactiveProducts.length}]</div>
+                            <div className={`w-fit py-2 px-3.5 text-[10px] cursor-pointer border border-brand-dark rounded-full sm:text-sm ${checkAds.viewAll ? "bg-brand-dark" : ""}`} onClick={() => { setCheckAds((prev) => ({ ...prev, viewAll: true, activeAds: false, inactiveAds: false })) }}>View all [{products?.data?.length}]</div>
+                            <div className={`w-fit py-2 px-3.5 text-[10px] cursor-pointer border border-brand-dark rounded-full sm:text-sm ${checkAds.activeAds ? "bg-brand-dark" : ""}`} onClick={() => { setCheckAds((prev) => ({ ...prev, activeAds: !checkAds.activeAds, viewAll: false, inactiveAds: false })) }}>Active Ads [{activeProducts?.length}]</div>
+                            <div className={`w-fit py-2 px-3.5 text-[10px] cursor-pointer border border-brand-dark rounded-full sm:text-sm ${checkAds.inactiveAds ? "bg-brand-dark" : ""}`} onClick={() => { setCheckAds((prev) => ({ ...prev, inactiveAds: !checkAds.inactiveAds, viewAll: false, activeAds: false })) }}>Inactive Ads [{inactiveProducts?.length}]</div>
                         </div>
 
                         <div className='grid gap-5 bg-brand-light p-5 rounded-xl'>
                             {
-                                checkAds.viewAll && allProducts && allProducts.length === 0 ? (
+                                checkAds.viewAll && products?.data?.length === 0 ? (
                                     <p className='text-2xl text-center text-brand-primary font-medium'>Product Not Found</p>
                                 ) :
-                                    checkAds.viewAll && allProducts && allProducts.map((v, i) => {
+                                    checkAds.viewAll && products?.data?.map((v, i) => {
                                         return (
                                             <div className='bg-white p-2.5 rounded-xl overflow-hidden' key={i}>
-                                                <MyAdsCard image={v.mainImage.secure_url} price={v.price} title={v.title} description={v.description} productId={v._id} category={v.category} createdBy={v.createdBy} status={v.status} />
+                                                <MyAdsCard image={v.mainImage.secure_url} price={v.price} title={v.title} description={v.description} productId={v._id} category={v.category.categoryName} createdBy={v.createdBy._id} status={v.status} />
                                             </div>
                                         )
                                     })
@@ -73,7 +73,7 @@ function MyAds() {
                                     checkAds.activeAds && activeProducts && activeProducts.length > 0 && activeProducts.map((v, i) => {
                                         return (
                                             <div className='bg-white p-2.5 rounded-xl overflow-hidden' key={i}>
-                                                <MyAdsCard image={v.mainImage.secure_url} price={v.price} title={v.title} description={v.description} productId={v._id} category={v.category} createdBy={v.createdBy} status={v.status} />
+                                                <MyAdsCard image={v.mainImage.secure_url} price={v.price} title={v.title} description={v.description} productId={v._id} category={v.category.categoryName} createdBy={v.createdBy._id} status={v.status} />
                                             </div>
                                         )
                                     })
@@ -86,7 +86,7 @@ function MyAds() {
                                     checkAds.inactiveAds && inactiveProducts && inactiveProducts.length > 0 && inactiveProducts.map((v, i) => {
                                         return (
                                             <div className='bg-white p-2.5 rounded-xl overflow-hidden' key={i}>
-                                                <MyAdsCard image={v.mainImage.secure_url} price={v.price} title={v.title} description={v.description} productId={v._id} category={v.category} createdBy={v.createdBy} status={v.status} />
+                                                <MyAdsCard image={v.mainImage.secure_url} price={v.price} title={v.title} description={v.description} productId={v._id} category={v.category.categoryName} createdBy={v.createdBy._id} status={v.status} />
                                             </div>
                                         )
                                     })

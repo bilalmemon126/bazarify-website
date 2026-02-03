@@ -1,115 +1,62 @@
 import React, { useEffect } from 'react'
 import ProductSectionCard from '../components/ProductSectionCard'
 import { useDispatch, useSelector } from 'react-redux'
-import { getProducts } from '../redux/features/products/productAction'
+import { getHomeProducts } from '../redux/features/products/productAction'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 function ProductSection() {
-    const base = "../../../public/uploads/"
 
-    const {products, error, loading} = useSelector((state) => state.products)
+    const { search } = useLocation()
+    const params = new URLSearchParams(search)
+    const navigate = useNavigate()
+    console.log(search)
+
+    const { homeProducts, homeProductsError, homeProductsLoading } = useSelector((state) => state.products)
     const dispatch = useDispatch()
-    
+
+
     useEffect(() => {
-        dispatch(getProducts())
-    },[])
-    
+        dispatch(getHomeProducts(search))
+    }, [search])
 
-    return loading ? (
+    let handleFilter = (key, value) => {
+        if (value) {
+            params.set(key, value)
+        }
+        else {
+            params.delete(key)
+        }
+        navigate(`?${params.toString()}`)
+    }
+
+    return homeProductsLoading ? (
         <p>loading...</p>
-    ):
-    (
-        <div className='grid grid-cols-12'>
-            <div className='w-full col-span-10 col-start-2 grid grid-cols-1 gap-2.5 sm:grid-cols-2 md:grid-cols-4'>
-                <h1 className='text-brand-primary text-3xl font-semibold col-span-1 py-5 sm:col-span-2 md:col-span-4'>Mobile Phones</h1>
-                {
-                    Array.isArray(products) && products.filter((v, i) => {
-                        return v.category === "mobile"
-                    }).map((v, i) => {
-                        return (
-                            <ProductSectionCard image={v.mainImage.secure_url} price={v.price} title={v.title} productId={v._id} key={i} />
-                        )
-                    })
-                }
-
-                <h1 className='text-brand-primary text-3xl font-semibold col-span-1 py-5 sm:col-span-2 md:col-span-4'>Cars</h1>
-                {
-                    Array.isArray(products) && products.filter((v, i) => {
-                        return v.category === "car"
-                    }).map((v, i) => {
-                        return (
-                            <ProductSectionCard image={v.mainImage.secure_url} price={v.price} title={v.title} productId={v._id} key={i} />
-                        )
-                    })
-                }
-
-                <h1 className='text-brand-primary text-3xl font-semibold col-span-1 py-5 sm:col-span-2 md:col-span-4'>Bikes</h1>
-                {
-                    Array.isArray(products) && products.filter((v, i) => {
-                        return v.category === "bike"
-                    }).map((v, i) => {
-                        return (
-                            <ProductSectionCard image={v.mainImage.secure_url} price={v.price} title={v.title} productId={v._id} key={i} />
-                        )
-                    })
-                }
-
-                <h1 className='text-brand-primary text-3xl font-semibold col-span-1 py-5 sm:col-span-2 md:col-span-4'>Electronics</h1>
-                {
-                    Array.isArray(products) && products.filter((v, i) => {
-                        return v.category === "electronics"
-                    }).map((v, i) => {
-                        return (
-                            <ProductSectionCard image={v.mainImage.secure_url} price={v.price} title={v.title} productId={v._id} key={i} />
-                        )
-                    })
-                }
-
-                <h1 className='text-brand-primary text-3xl font-semibold col-span-1 py-5 sm:col-span-2 md:col-span-4'>Fashion</h1>
-                {
-                    Array.isArray(products) && products.filter((v, i) => {
-                        return v.category === "fashion"
-                    }).map((v, i) => {
-                        return (
-                            <ProductSectionCard image={v.mainImage.secure_url} price={v.price} title={v.title} productId={v._id} key={i} />
-                        )
-                    })
-                }
-
-                <h1 className='text-brand-primary text-3xl font-semibold col-span-1 py-5 sm:col-span-2 md:col-span-4'>House</h1>
-                {
-                    Array.isArray(products) && products.filter((v, i) => {
-                        return v.category === "house"
-                    }).map((v, i) => {
-                        return (
-                            <ProductSectionCard image={v.mainImage.secure_url} price={v.price} title={v.title} productId={v._id} key={i} />
-                        )
-                    })
-                }
-
-                <h1 className='text-brand-primary text-3xl font-semibold col-span-1 py-5 sm:col-span-2 md:col-span-4'>Furniture</h1>
-                {
-                    Array.isArray(products) && products.filter((v, i) => {
-                        return v.category === "furniture"
-                    }).map((v, i) => {
-                        return (
-                            <ProductSectionCard image={v.mainImage.secure_url} price={v.price} title={v.title} productId={v._id} key={i} />
-                        )
-                    })
-                }
-
-                <h1 className='text-brand-primary text-3xl font-semibold col-span-1 py-5 sm:col-span-2 md:col-span-4'>Kids</h1>
-                {
-                    Array.isArray(products) && products.filter((v, i) => {
-                        return v.category === "kids"
-                    }).map((v, i) => {
-                        return (
-                            <ProductSectionCard image={v.mainImage.secure_url} price={v.price} title={v.title} productId={v._id} key={i} />
-                        )
-                    })
-                }
+    ) :
+        (
+            <div className='grid grid-cols-12'>
+                <div className='col-span-10 col-start-2'>
+                    {
+                        homeProducts?.data?.map((v, i) => {
+                            return (
+                                <div key={i}>
+                                    <h1 className='text-brand-primary text-3xl font-semibold col-span-1 py-5 sm:col-span-2 md:col-span-4' key={i}>{v.title}</h1>
+                                    <div className='w-full grid grid-cols-1 gap-2.5 sm:grid-cols-2 md:grid-cols-4' >
+                                        {
+                                            v.products.length > 0 ?
+                                                v.products.map((v, i) => {
+                                                    return (
+                                                        <ProductSectionCard image={v.mainImage.secure_url} price={v.price} title={v.title} productId={v._id} key={i} />
+                                                    )
+                                                }) : ""
+                                        }
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
+                </div>
             </div>
-        </div>
-    )
+        )
 }
 
 export default ProductSection

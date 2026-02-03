@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const registerUser = createAsyncThunk('registerUser', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch('https://bazarify-backend.vercel.app/register', {
+        const response = await fetch('http://localhost:3002/register', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -12,23 +12,19 @@ export const registerUser = createAsyncThunk('registerUser', async (data, {rejec
         })
         if(!response.ok){
             const error = await response.json()
-            console.log(error.message)
             return rejectWithValue(error)
         }
         const result = await response.json()
-        console.log(result)
         return result
     }
     catch(err){
-        console.log("error", err)
         return rejectWithValue(err)
     }
 })
 
 export const otpVerification = createAsyncThunk('otpVerification', async (data, {rejectWithValue}) => {
     try{
-        console.log(data)
-        const response = await fetch(`https://bazarify-backend.vercel.app/user-otpverification/${localStorage.getItem('userId')}`, {
+        const response = await fetch(`http://localhost:3002/user-otpverification/${localStorage.getItem('userId')}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -38,15 +34,12 @@ export const otpVerification = createAsyncThunk('otpVerification', async (data, 
         })
         if(!response.ok){
             const error = await response.json()
-            console.log(error.message)
             return rejectWithValue(error)
         }
         const result = await response.json()
-        console.log(result)
         return result
     }
     catch(err){
-        console.log("error", err)
         return rejectWithValue(err)
     }
 })
@@ -54,8 +47,7 @@ export const otpVerification = createAsyncThunk('otpVerification', async (data, 
 
 export const loginUser = createAsyncThunk('loginUser', async (data, {rejectWithValue}) => {
     try{
-        console.log(data)
-        const response = await fetch('https://bazarify-backend.vercel.app/login', {
+        const response = await fetch('http://localhost:3002/login', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -65,15 +57,12 @@ export const loginUser = createAsyncThunk('loginUser', async (data, {rejectWithV
         })
         if(!response.ok){
             const error = await response.json()
-            console.log(error.message)
             return rejectWithValue(error)
         }
         const result = await response.json()
-        console.log(result)
         return result
     }
     catch(err){
-        console.log("error", err)
         return rejectWithValue(err)
     }
 })
@@ -81,7 +70,7 @@ export const loginUser = createAsyncThunk('loginUser', async (data, {rejectWithV
 
 export const logoutUser = createAsyncThunk('logoutUser', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch('https://bazarify-backend.vercel.app/logout', {
+        const response = await fetch('http://localhost:3002/logout', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -90,15 +79,12 @@ export const logoutUser = createAsyncThunk('logoutUser', async (data, {rejectWit
         })
         if(!response.ok){
             const error = await response.json()
-            console.log(error.message)
             return rejectWithValue(error)
         }
         const result = await response.json()
-        console.log(result)
         return result
     }
     catch(err){
-        console.log("error", err)
         return rejectWithValue(err)
     }
 })

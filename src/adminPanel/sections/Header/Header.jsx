@@ -56,7 +56,7 @@ function Header() {
               md:text-[0.8rem]
             "
           >
-            Bilal M.
+            {localStorage.getItem('firstName').charAt(0).toUpperCase() + localStorage.getItem('firstName').slice(1)}
           </p>
         </div>
       </div>

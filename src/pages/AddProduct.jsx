@@ -3,13 +3,14 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { MultipleFilesReader, SingleFileReader } from '../components/ImageReader';
 import Button from '../components/Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { addProduct, editProduct, getProducts } from '../redux/features/products/productAction';
+import { addProduct, editProduct, getProductDetails } from '../redux/features/products/productAction';
+import { getLocation } from '../redux/features/location/locationAction'
 
 function AddProduct() {
   const [singleImagePreviews, setSingleImagePreviews] = useState([]);
   const [multipleImagePreviews, setMultipleImagePreviews] = useState([]);
 
-  let { category } = useParams()
+  let { categoryName } = useParams()
   let { productId } = useParams()
 
   localStorage.setItem('productId', productId)
@@ -17,8 +18,14 @@ function AddProduct() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
+  const { location } = useSelector((state) => state.locationSlice)
+
+  useEffect(() => {
+    dispatch(getLocation())
+  }, [])
+
   let [input, setInput] = useState({
-    category: category,
+    category: categoryName,
     mainImage: "",
     images: "",
     make: "",
@@ -32,58 +39,56 @@ function AddProduct() {
     title: "",
     description: "",
     price: "",
+    condition: "used",
     location: "",
     status: "active"
   })
 
-
   useEffect(() => {
     if (productId) {
-      dispatch(getProducts())
+      dispatch(getProductDetails(productId))
     }
   }, [])
 
-  const { products, error, loading } = useSelector((state) => state.products)
-
-  let allProducts = Array.isArray(products) && products.filter((v, i) => { return v._id === productId })
-  let getProductDetails = allProducts.length > 0 ? allProducts[0] : null
+  const { productDetails, productDetailsError, productDetailsLoading } = useSelector((state) => state.products)
 
 
   useEffect(() => {
-    if (getProductDetails) {
+    if (productDetails?.data) {
       setInput((prev) => ({
         ...prev,
-        category: category,
-        mainImage: getProductDetails.mainImage,
-        images: getProductDetails.images,
-        make: getProductDetails.make || "",
-        brand: getProductDetails.brand || "",
-        bedrooms: getProductDetails.bedrooms || "",
-        bathrooms: getProductDetails.bathrooms || "",
-        areaUnit: getProductDetails.areaUnit || "",
-        area: getProductDetails.area || "",
-        fabric: getProductDetails.fabric || "",
-        gender: getProductDetails.gender || "",
-        title: getProductDetails.title || "",
-        description: getProductDetails.description || "",
-        price: getProductDetails.price || "",
-        location: getProductDetails.location || "",
-        status: getProductDetails.status || "active"
+        category: categoryName,
+        mainImage: productDetails?.data?.mainImage,
+        images: productDetails?.data?.images,
+        make: productDetails?.data?.make || "",
+        brand: productDetails?.data?.brand || "",
+        bedrooms: productDetails?.data?.bedrooms || "",
+        bathrooms: productDetails?.data?.bathrooms || "",
+        areaUnit: productDetails?.data?.areaUnit || "",
+        area: productDetails?.data?.area || "",
+        fabric: productDetails?.data?.fabric || "",
+        gender: productDetails?.data?.gender || "",
+        title: productDetails?.data?.title || "",
+        description: productDetails?.data?.description || "",
+        price: productDetails?.data?.price || "",
+        condition: productDetails?.data?.condition || "used",
+        location: productDetails?.data?.location._id || "",
+        status: productDetails?.data?.status || "active"
       }))
     }
     
-    if (getProductDetails && getProductDetails.mainImage) {
-      setSingleImagePreviews(getProductDetails.mainImage.secure_url)
+    if (productDetails?.data?.mainImage) {
+      setSingleImagePreviews(productDetails?.data?.mainImage.secure_url)
     }
-    if (getProductDetails && getProductDetails.images) {
-      setMultipleImagePreviews(getProductDetails.images)
+    if (productDetails?.data?.images) {
+      setMultipleImagePreviews(productDetails?.data?.images)
     }
-  }, [getProductDetails])
+  }, [productDetails])
 
 
   const formData = new FormData()
 
-  formData.append("category", input.category)
+  formData.append("category", categoryName)
   
   if(input.images.length > 0){
     input.images.forEach((file) => {
@@ -114,6 +119,7 @@ function AddProduct() {
   formData.append("title", input.title)
   formData.append("description", input.description)
   formData.append("price", input.price)
+  formData.append("condition", input.condition)
   formData.append("location", input.location)
   formData.append("status", input.status)
   formData.append("productId", productId)
@@ -135,11 +141,11 @@ function AddProduct() {
     const response = await dispatch(editProduct(formData))
 
     if (response.payload.status) {
-      navigate('/')
+      navigate(`/myads/${localStorage.getItem("userId")}`)
     }
   }
 
-  return loading ?
+  return productDetailsLoading ?
     <p>loading...</p> :
     (
       <div className='w-full grid grid-cols-12'>
@@ -184,7 +190,7 @@ function AddProduct() {
             </div>
 
             {
-              category == "bike" || category == "car" ?
+              categoryName == "bike" || categoryName == "car" ?
                 <div className='grid grid-cols-1 py-5 border-b border-brand-primary'>
                   <label htmlFor="make" className='py-2.5 text-brand-primary font-medium'>Make</label>
                   <input type="text" id='make' className='p-2.5 rounded border border-brand-dark' onChange={(e) => { setInput((prev) => ({ ...prev, make: e.target.value })) }} value={input.make}  placeholder='Make' name="make" />
@@ -193,7 +199,7 @@ function AddProduct() {
             }
 
             {
-              category == "mobile" || category == "tablet" || category == "electronics" || category == "furniture" || category == "fashion" ?
+              categoryName == "mobile" || categoryName == "tablet" || categoryName == "electronics" || categoryName == "furniture" || categoryName == "fashion" ?
                 <div className='grid grid-cols-1 py-5 border-b border-brand-primary'>
                   <label htmlFor="brand" className='py-2.5 text-brand-primary font-medium'>Brand</label>
                   <input type="text" id='brand' className='p-2.5 rounded border border-brand-dark' onChange={(e) => { setInput((prev) => ({ ...prev, brand: e.target.value })) }} value={input.brand} placeholder='Enter Brand' name="brand" />
@@ -202,7 +208,7 @@ function AddProduct() {
             }
 
             {
-              category == "house" ?
+              categoryName == "house" ?
                 <>
                   <div className='grid grid-cols-1 py-5 border-b border-brand-primary'>
                     <label htmlFor="bedrooms" className='py-2.5 text-brand-primary font-medium'>Bedrooms</label>
@@ -224,9 +230,9 @@ function AddProduct() {
                       <option value="">Select Area Unit</option>
                       <option value="kanal">Kanal</option>
                       <option value="marla">Marla</option>
-                      <option value="sqaureFeet">Sqaure Feet</option>
-                      <option value="sqaureMeter">Square Meter</option>
-                      <option value="sqaureYards">Square Yards</option>
+                      <option value="sqaure feet">Sqaure Feet</option>
+                      <option value="sqaure meter">Square Meter</option>
+                      <option value="sqaure yards">Square Yards</option>
                     </select>
                   </div>
 
@@ -239,7 +245,7 @@ function AddProduct() {
             }
 
             {
-              category == "fashion" ?
+              categoryName == "fashion" ?
                 <>
                   <div className='grid grid-cols-1 py-5 border-b border-brand-primary'>
                     <label htmlFor="fabric" className='py-2.5 text-brand-primary font-medium'>Fabric</label>
@@ -277,7 +283,21 @@ function AddProduct() {
 
             <div className='grid grid-cols-1 py-5 border-b border-brand-primary'>
               <label htmlFor="price" className='py-2.5 text-brand-primary font-medium'>Price</label>
-              <input type="text" id='price' className='p-2.5 rounded border border-brand-dark' onChange={(e) => { setInput((prev) => ({ ...prev, price: e.target.value })) }} value={input.price} placeholder='Enter Price' name="price" />
+              <input type="number" id='price' className='p-2.5 rounded border border-brand-dark' onChange={(e) => { setInput((prev) => ({ ...prev, price: e.target.value })) }} value={input.price} placeholder='Enter Price' name="price" />
+            </div>
+            
+            <div className='grid grid-cols-1 py-5 border-b border-brand-primary'>
+            <label htmlFor="condition" className='py-2.5 text-brand-primary font-medium'>Condition</label>
+              <select
+                id="condition"
+                name="condition"
+                value={input.condition}
+                onChange={(e) => { setInput((prev) => ({ ...prev, condition: e.target.value })) }}
+                className="p-2.5 rounded border border-brand-dark"
+              >
+                <option value="used">Used</option>
+                <option value="new">New</option>
+              </select>
             </div>
 
             <div className='grid grid-cols-1 py-5 border-b border-brand-primary'>
@@ -290,10 +310,13 @@ function AddProduct() {
                 className="p-2.5 rounded border border-brand-dark"
               >
                 <option value="">Select City</option>
-                <option value="karachi">Karachi</option>
-                <option value="hyderabad">Hyderabad</option>
-                <option value="lahore">Lahore</option>
-                <option value="islamabad">Islamabad</option>
+                {
+                  location?.data?.map((v,i) => {
+                    return (
+                      <option value={v._id} key={i}>{v.location}</option>
+                    )
+                  })
+                }
               </select>
             </div>
 

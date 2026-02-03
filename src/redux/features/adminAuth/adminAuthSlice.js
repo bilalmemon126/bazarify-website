@@ -16,10 +16,9 @@ export const adminAuthSlice = createSlice({
             })
             .addCase(adminAuthLogin.fulfilled, (state, action) => {
                 state.loading = false;
-                console.log(action.payload)
                 state.admin = action.payload;
-                localStorage.setItem("adminId", action.payload.data._id)
-                localStorage.setItem("firstName", action.payload.data.firstName)
+                localStorage.setItem("adminId", action.payload?.data?._id)
+                localStorage.setItem("firstName", action.payload?.data?.firstName)
             })
             .addCase(adminAuthLogin.rejected, (state, action) => {
                 state.loading = false;
@@ -31,13 +30,11 @@ export const adminAuthSlice = createSlice({
             })
             .addCase(adminAuthLogout.fulfilled, (state, action) => {
                 state.loading = false;
-                console.log(action.payload)
                 state.admin = action.payload;
             })
             .addCase(adminAuthLogout.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
-                console.log(action.payload)
             })
     }
 })

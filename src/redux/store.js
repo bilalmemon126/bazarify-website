@@ -5,6 +5,10 @@ import protectedReducer from './features/protected/protectedSlice'
 import adminAuthReducer from "./features/adminAuth/adminAuthSlice";
 import adminProductReducer from "./features/adminProduct/adminProductSlice";
 import adminUserReducer from "./features/adminUser/adminUserSlice";
+import favouriteProductsReducer from "./features/favourite/favouriteSlice";
+import chatReducer from "./features/chat/chatSlice";
+import categoryReducer from "./features/category/categorySlice";
+import locationReducer from './features/location/locationSlice'
 
 export const store = configureStore({
     reducer: {
@@ -13,6 +17,10 @@ export const store = configureStore({
         protected: protectedReducer,
         adminAuth: adminAuthReducer,
         adminProducts: adminProductReducer,
-        adminUsers: adminUserReducer
+        adminUsers: adminUserReducer,
+        categorySlice: categoryReducer,
+        favouriteProducts: favouriteProductsReducer,
+        chat: chatReducer,
+        locationSlice: locationReducer
     },
 })

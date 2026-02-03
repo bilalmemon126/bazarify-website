@@ -14,9 +14,18 @@
     align-items: center;
     gap: 20px;
 }
-#productCardContainer .productMainImage{
+#productCardContainer .productMainImageBox{
     width: 150px;
     height: 150px;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 10px;
+}
+#productCardContainer .productMainImageBox .productMainImage{
+    height: fit-content;
     border-radius: 10px;
 }
 #productCardContainer .titleAndPrice{

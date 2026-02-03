@@ -12,12 +12,14 @@ import ProductDetails from './pages/ProductDetails'
 import Chat from './pages/Chat'
 import MyAds from './pages/MyAds'
 
-import AdminLayout from './adminPanel/AdminLayout/AdminLayout'
-import Dashboard from './adminPanel/pages/Dashboard/Dashboard'
+import AdminLayout from './adminPanel/AdminLayout'
+import Dashboard from './adminPanel/pages/Dashboard'
 import UserManagement from './adminPanel/pages/UserManagement/UserManagement'
 import ProductManagement from './adminPanel/pages/ProductManagement/ProductManagement'
-import Category from './adminPanel/pages/Cartegory/Category'
+import Category from './adminPanel/pages/Category'
 import AdminLogin from './adminPanel/pages/AdminLogin'
+import MyFavourite from './pages/MyFavourite'
+import ProtectedRoute from './ProtectedRoute'
 
 function App() {
   const router = createBrowserRouter([
@@ -46,46 +48,54 @@ function App() {
           element: <Home />
         },
         {
-          path: "/product/:category",
-          element: <Products />
+          path: "/product",
+          element: <ProtectedRoute children={<Products />} />
         },
         {
           path: "/addproduct/choosecategory",
-          element: <ChooseCategory />
+          element: <ProtectedRoute children={<ChooseCategory />} />
         },
         {
-          path: "/addproduct/:category",
-          element: <AddProduct />
+          path: "/addproduct/:categoryName",
+          element: <ProtectedRoute children={<AddProduct />} />
         },
         {
-          path: "/editproduct/:category/:productId",
-          element: <AddProduct />
+          path: "/editproduct/:categoryName/:productId",
+          element: <ProtectedRoute children={<AddProduct />} />
         },
         {
           path: "/productdetails/:id",
-          element: <ProductDetails />
+          element: <ProtectedRoute children={<ProductDetails />} />
         },
         {
           path: "/chat/:myId/:productId", 
-          element: <Chat />
+          element: <ProtectedRoute children={<Chat />} />
+        },
+        {
+          path: "/chat/:myId", 
+          element: <ProtectedRoute children={<Chat />} />
         },
         {
           path: "/myads/:myid", 
-          element: <MyAds />
+          element: <ProtectedRoute children={<MyAds />} />
+        },
+        {
+          path: "/myfavourite/:myid", 
+          element: <ProtectedRoute children={<MyFavourite />} />
         }
       ]
     },
     
     {
-      path: "/bazarify/adminlogin",
+      path: "/adminlogin",
       element: <AdminLogin />
     },
     {
-      path: "/bazarify/adminpanel",
+      path: "/adminpanel",
       element: <AdminLayout />,
       children: [
         {
-          path: "/bazarify/adminpanel",
+          path: "/adminpanel",
           element: <Dashboard />
         },
         {

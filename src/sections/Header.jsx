@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Logo from '../components/Logo'
 import Button from '../components/Button'
 import profileVertor from '../assets/profile vector.jpg'
@@ -9,11 +9,12 @@ import { CiMenuFries } from 'react-icons/ci'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { IoMdArrowDropdown } from 'react-icons/io'
 import { FaRegHeart } from 'react-icons/fa'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { logoutUser } from '../redux/features/user/userAction'
 import profileVector from '../assets/profile vector.jpg'
 import { AiOutlineProduct } from 'react-icons/ai'
 import { BiLogOut } from 'react-icons/bi'
+import { getLocation } from '../redux/features/location/locationAction'
 
 function Header() {
   let [input, setInput] = useState({ search: "", city: "" })
@@ -22,6 +23,12 @@ function Header() {
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
+  
+  const { location } = useSelector((state) => state.locationSlice)
+  useEffect(() => {
+    dispatch(getLocation())
+  }, [])
 
   const handleLogout = async () => {
     const response = await dispatch(logoutUser())
@@ -41,8 +48,10 @@ function Header() {
           {
             localStorage.getItem("userId") ?
               <div className='col-span-3 w-full flex items-center gap-5'>
-                <IoChatbubbleEllipsesOutline className='text-3xl text-brand-primary' />
+                <NavLink to={`/chat/${localStorage.getItem("userId")}`}><IoChatbubbleEllipsesOutline className='text-3xl text-brand-primary' /></NavLink>
+                <NavLink to={`/myfavourite/${localStorage.getItem("userId")}`}>
                 <FaRegHeart className='text-3xl' />
+                </NavLink>
                 <div className='flex items-center'>
                   <div className='w-[40px] rounded-full overflow-hidden'>
                     <img src={profileVertor} alt="" />
@@ -96,14 +105,17 @@ function Header() {
             id="city"
             name="city"
             value={input.city}
-            onChange={(e) => { setInput((prev) => ({ ...prev, city: e.target.value })) }}
+            onChange={(e) => { setInput((prev) => ({ ...prev, city: e.target.value })), navigate(e.target.value) }}
             className="mr-2.5 py-1.5 pr-7 pl-3 col-span-9 text-base text-brand-primary placeholder:text-brand-light outline-none sm:col-span-10 md:col-span-11"
           >
             <option value="">Select City</option>
-            <option value="karachi">Karachi</option>
-            <option value="hyderabad">Hyderabad</option>
-            <option value="lahore">Lahore</option>
-            <option value="islamabad">Islamabad</option>
+            {
+              location?.data?.map((v, i) => {
+                return (
+                  <option value={`?location=${v._id}`} key={i}>{v.location}</option>
+                )
+              })
+            }
           </select>
         </div>
 
@@ -122,13 +134,13 @@ function Header() {
 
       <nav className={`${responsiveNav ? "max-h-[500px] opacity-100 py-5" : "max-h-0 opacity-0"} static top-0 w-full h-fit overflow-hidden transition-all duration-500 ease-in-out grid grid-cols-12 items-center justify-center gap-2.5 sm:max-h-none sm:opacity-100 sm:grid sm:py-5`}>
         <ul className='list-none col-span-10 col-start-2 justify-center items-center text-center gap-2.5 sm:flex sm:col-start-2 sm:gap-10 sm:justify-start'>
-          <NavLink to={"/"}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>All</li></NavLink>
-          <NavLink to={"/product/mobile"}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>Mobiles</li></NavLink>
-          <NavLink to={"/product/car"}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>Cars</li></NavLink>
-          <NavLink to={"/product/bike"}><li className='border-b-2 border-transparent hover:border-brand-primary'>Bikes</li></NavLink>
-          <NavLink to={"/product/house"}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>House</li></NavLink>
-          <NavLink to={"/product/tablet"}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>Tablets</li></NavLink>
-          <NavLink to={"/product/fashion"}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>Fashion</li></NavLink>
+          <NavLink to={"/product"}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>All</li></NavLink>
+          <NavLink to={"/product?category=mobile"}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>Mobiles</li></NavLink>
+          <NavLink to={"/product?category=car"}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>Cars</li></NavLink>
+          <NavLink to={"/product?category=bike"}><li className='border-b-2 border-transparent hover:border-brand-primary'>Bikes</li></NavLink>
+          <NavLink to={"/product?category=house"}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>House</li></NavLink>
+          <NavLink to={"/product?category=tablet"}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>Tablets</li></NavLink>
+          <NavLink to={"/product?category=fashion"}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>Fashion</li></NavLink>
         </ul>
         <div className='mt-3 col-span-10 col-start-2 grid grid-cols-2 gap-5 items-center justify-center sm:hidden'>
           {

@@ -1,12 +1,28 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io"
+import { useDispatch, useSelector } from "react-redux"
 import { NavLink } from "react-router-dom"
+import { getCategory } from "../redux/features/category/categoryAction"
+import { getLocation } from "../redux/features/location/locationAction"
 
-function Filter() {
-  let [input, setInput] = useState({ minPrice: "", maxPrice: "" })
+function Filter({handleFilter, minPrice, maxPrice, setOpen}) {
+  let [input, setInput] = useState({ minPrice: "" || minPrice, maxPrice: "" || maxPrice })
   let [categoryIsOpen, setCategoryIsOpen] = useState(false)
   let [locationIsOpen, setLocationIsOpen] = useState(false)
-  return (
+
+  const dispatch = useDispatch()
+  const { loading, category, error } = useSelector((state) => state.categorySlice)
+  const { location } = useSelector((state) => state.locationSlice)
+
+  useEffect(() => {
+    dispatch(getCategory())
+    dispatch(getLocation())
+  }, [])
+
+  return loading ? (
+    <p>loading...</p>
+  ):
+  (
     <div className='w-full py-2.5 border-r border-brand-light pr-2.5 grid gap-5'>
       <h2 className='text-2xl text-brand-primary font-medium py-2.5'>Filter</h2>
 
@@ -17,12 +33,13 @@ function Filter() {
         </div>
         <div className={`grid grid-cols-5 items-center pl-2.5 ${categoryIsOpen ? "h-auto" : "h-0 opacity-0 hidden"}`}>
           <ul className="list-none grid gap-2.5">
-            <NavLink to={"/product/mobile"} className={({ isActive }) => isActive ? 'text-brand-primary font-medium' : 'text-brand-primary'}><li>Mobiles</li></NavLink>
-            <NavLink to={"/product/car"} className={({ isActive }) => isActive ? 'text-brand-primary font-medium' : 'text-brand-primary'}><li>Cars</li></NavLink>
-            <NavLink to={"/product/bike"} className={({ isActive }) => isActive ? 'text-brand-primary font-medium' : 'text-brand-primary'}><li>Bikes</li></NavLink>
-            <NavLink to={"/product/house"} className={({ isActive }) => isActive ? 'text-brand-primary font-medium' : 'text-brand-primary'}><li>House</li></NavLink>
-            <NavLink to={"/product/tablet"} className={({ isActive }) => isActive ? 'text-brand-primary font-medium' : 'text-brand-primary'}><li>Tablets</li></NavLink>
-            <NavLink to={"/product/fashion"} className={({ isActive }) => isActive ? 'text-brand-primary font-medium' : 'text-brand-primary'}><li>Fashion</li></NavLink>
+            {
+              category?.data?.map((v, i) => {
+                return (
+                  <li className="cursor-pointer" key={i} onClick={() => {handleFilter("category", v.categoryName), setOpen(false)}}>{v.categoryName}</li>
+                )
+              })
+            }
           </ul>
         </div>
       </div>
@@ -34,12 +51,13 @@ function Filter() {
         </div>
         <div className={`grid grid-cols-5 items-center pl-2.5 ${locationIsOpen ? "h-auto" : "h-0 opacity-0 hidden"}`}>
           <ul className="list-none grid gap-2.5">
-            <NavLink to={"/product/mobile"} className={({ isActive }) => isActive ? 'text-brand-primary font-medium' : 'text-brand-primary'}><li>Mobiles</li></NavLink>
-            <NavLink to={"/product/car"} className={({ isActive }) => isActive ? 'text-brand-primary font-medium' : 'text-brand-primary'}><li>Cars</li></NavLink>
-            <NavLink to={"/product/bike"} className={({ isActive }) => isActive ? 'text-brand-primary font-medium' : 'text-brand-primary'}><li>Bikes</li></NavLink>
-            <NavLink to={"/product/house"} className={({ isActive }) => isActive ? 'text-brand-primary font-medium' : 'text-brand-primary'}><li>House</li></NavLink>
-            <NavLink to={"/product/tablet"} className={({ isActive }) => isActive ? 'text-brand-primary font-medium' : 'text-brand-primary'}><li>Tablets</li></NavLink>
-            <NavLink to={"/product/fashion"} className={({ isActive }) => isActive ? 'text-brand-primary font-medium' : 'text-brand-primary'}><li>Fashion</li></NavLink>
+            {
+              location?.data?.map((v, i) => {
+                return (
+                  <li className="w-36 cursor-pointer" key={i} onClick={() => {handleFilter("location", v._id), setOpen(false)}}>{v.location}</li>
+                )
+              })
+            }
           </ul>
         </div>
       </div>
@@ -47,9 +65,9 @@ function Filter() {
       <div className="border-b border-brand-light p-2.5 rounded grid gap-2.5">
         <p className="text-lg font-medium">Price</p>
         <div className="grid grid-cols-5 items-center">
-          <input type="number" className="col-span-2 p-2 text-brand-primary border-brand-light border rounded focus:outline-brand-primary" onChange={(e) => { setInput((prev) => ({ ...prev, minPrice: e.target.value })) }} value={input.minPrice} placeholder="Min" />
+          <input type="number" className="col-span-2 p-2 text-brand-primary border-brand-light border rounded focus:outline-brand-primary" onChange={(e) => { setInput((prev) => ({ ...prev, minPrice: e.target.value })) }} onBlur={(e) => {handleFilter("minPrice", e.target.value), setOpen(false)}} value={input.minPrice} placeholder="Min" />
           <p className="col-span-1 text-lg font-mono text-center">To</p>
-          <input type="number" className="col-span-2 p-2 text-brand-primary border-brand-light border rounded focus:outline-brand-primary" onChange={(e) => { setInput((prev) => ({ ...prev, maxPrice: e.target.value })) }} value={input.maxPrice} placeholder="Max" />
+          <input type="number" className="col-span-2 p-2 text-brand-primary border-brand-light border rounded focus:outline-brand-primary" onChange={(e) => { setInput((prev) => ({ ...prev, maxPrice: e.target.value })) }} onBlur={(e) => {handleFilter("maxPrice", e.target.value), setOpen(false)}} value={input.maxPrice} placeholder="Max" />
         </div>
       </div>
     </div>

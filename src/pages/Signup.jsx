@@ -21,7 +21,6 @@ function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await dispatch(registerUser(input))
-    console.log(response.payload.data)
 
     if(response.payload.status){
       navigate(`/otpverification/${response.payload.data._id}`)

@@ -12,7 +12,7 @@ function SideBar() {
                 <div className="topHeadingBox">
                     <h3>Dashboard</h3>
                 </div>
-                <NavLink to={"/bazarify/adminpanel"} className="navLinks">
+                <NavLink to={"/adminpanel"} className="navLinks">
                     <AdminLinks icon={<MdOutlineDashboard className='adminLinksIcon' />} text="Dasboard" />
                 </NavLink>
                 <NavLink to={"admin/usermanagement"} className="navLinks">

@@ -16,7 +16,7 @@ function AdminLogin() {
     const response = await dispatch(adminAuthLogin(input))
     
     if (response.payload.status) {
-      navigate("/bazarify/adminpanel")
+      navigate("/adminpanel")
     }
 
     setInput({ email: "", password: "" })

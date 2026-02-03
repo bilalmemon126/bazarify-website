@@ -12,32 +12,36 @@ export const adminUserSlice = createSlice({
     extraReducers: (builder) => {
         builder
         .addCase(adminGetUsers.pending, (state) => {
+            state.error = null
+            state.adminUsers = []
             state.loading = true
         })
         .addCase(adminGetUsers.fulfilled, (state, action) => {
+            state.error = null
             state.loading = false
-            state.adminUsers = action.payload
-            console.log(action.payload)
+            state.adminUsers = action.payload.data
 
         })
         .addCase(adminGetUsers.rejected, (state, action) => {
+            state.adminUsers = []
             state.loading = false
-            console.log(action.payload)
             state.error = action.payload
         })
 
         .addCase(adminEditUsers.pending, (state) => {
+            state.error = null
+            state.adminUsers = []
             state.loading = true
         })
         .addCase(adminEditUsers.fulfilled, (state, action) => {
+            state.error = null
             state.loading = false
             state.adminUsers = action.payload
-            console.log(action.payload)
 
         })
         .addCase(adminEditUsers.rejected, (state, action) => {
+            state.adminUsers = []
             state.loading = false
-            console.log(action.payload)
             state.error = action.payload
         })
     }

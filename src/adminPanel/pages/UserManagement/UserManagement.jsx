@@ -27,25 +27,25 @@ function UserManagement() {
     return loading ?
         <p>Loading...</p> :
         (
-            <div id="userManagementContainer">
-                <table>
+            <div className='w-full'>
+                <table className='w-full border-collapse'>
                     <thead>
                         <tr>
-                            <th>Id</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Action</th>
+                            <th className='text-white text-left text-lg bg-black py-2.5 px-12'>Id</th>
+                            <th className='text-white text-left text-lg bg-black py-2.5 px-12'>Name</th>
+                            <th className='text-white text-left text-lg bg-black py-2.5 px-12'>Email</th>
+                            <th className='text-white text-left text-lg bg-black py-2.5 px-12'>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
                             adminUsers.length > 0 && adminUsers.map((v, i) => {
                                 return (
-                                    <tr key={i}>
-                                        <td>{v._id}</td>
-                                        <td>{v.firstName} {v.lastName}</td>
-                                        <td>{v.email}</td>
-                                        <td id='action'>
+                                    <tr key={i} className='bg-[rgb(19,19,19)]'>
+                                        <td className='text-[rgb(186,186,186)] py-2.5 px-12 border-b-3 border-[rgb(25,25,25)]'>{v._id}</td>
+                                        <td className='text-[rgb(186,186,186)] py-2.5 px-12 border-b-3 border-[rgb(25,25,25)]'>{v.firstName} {v.lastName}</td>
+                                        <td className='text-[rgb(186,186,186)] py-2.5 px-12 border-b-3 border-[rgb(25,25,25)]'>{v.email}</td>
+                                        <td id='action' className='text-[rgb(186,186,186)] py-2.5 px-12 border-b-3 border-[rgb(25,25,25)]'>
                                             <Button btnText={v.isBlocked ? "UnBlock" : "Block"} btnStyle={"bg-red-500"} handleEvent={() => {handleBlock(v._id)}}/>
                                         </td>
                                     </tr>

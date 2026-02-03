@@ -12,13 +12,17 @@ export const protectedSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(protectedRoute.pending, (state) => {
+                state.protected = {}
+                state.error = null
                 state.loading = true
             })
             .addCase(protectedRoute.fulfilled, (state, action) => {
+                state.error = null
                 state.loading = false
                 state.protected = action.payload
             })
             .addCase(protectedRoute.rejected, (state, action) => {
+                state.protected = {}
                 state.loading = false
                 state.error = action.payload
             })
