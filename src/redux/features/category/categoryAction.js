@@ -1,8 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002'
+
 export const getCategory = createAsyncThunk('getCategory', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch(`https://bazarify-website-backend-production.up.railway.app/category`, {
+        const response = await fetch(`${backendUrl}/category`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -23,7 +25,7 @@ export const getCategory = createAsyncThunk('getCategory', async (data, {rejectW
 
 export const addCategory = createAsyncThunk('addCategory', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch(`https://bazarify-website-backend-production.up.railway.app/admin/category/${localStorage.getItem("adminId")}`, {
+        const response = await fetch(`${backendUrl}/admin/category/${localStorage.getItem("adminId")}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -45,7 +47,7 @@ export const addCategory = createAsyncThunk('addCategory', async (data, {rejectW
 
 export const editCategory = createAsyncThunk('editCategory', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch(`https://bazarify-website-backend-production.up.railway.app/admin/category/${data.categoryId}/${localStorage.getItem("adminId")}`, {
+        const response = await fetch(`${backendUrl}/admin/category/${data.categoryId}/${localStorage.getItem("adminId")}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -67,7 +69,7 @@ export const editCategory = createAsyncThunk('editCategory', async (data, {rejec
 
 export const deleteCategory = createAsyncThunk('deleteCategory', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch(`https://bazarify-website-backend-production.up.railway.app/admin/category/${data.categoryId}/${localStorage.getItem("adminId")}`, {
+        const response = await fetch(`${backendUrl}/admin/category/${data.categoryId}/${localStorage.getItem("adminId")}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

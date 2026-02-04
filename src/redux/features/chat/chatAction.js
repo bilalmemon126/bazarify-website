@@ -1,9 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002'
+
 
 export const getChat = createAsyncThunk('getChat', async ({productId, userId}, {rejectWithValue}) => {
     try{
-        const response = await fetch(`https://bazarify-website-backend-production.up.railway.app/chat/${productId}/${userId}`, {
+        const response = await fetch(`${backendUrl}/chat/${productId}/${userId}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -25,7 +27,7 @@ export const getChat = createAsyncThunk('getChat', async ({productId, userId}, {
 export const getAllChats = createAsyncThunk('getAllChats', async ({userId}, {rejectWithValue}) => {
     console.log("userId ", userId)
     try{
-        const response = await fetch(`https://bazarify-website-backend-production.up.railway.app/chat/${userId}`, {
+        const response = await fetch(`${backendUrl}/chat/${userId}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -46,7 +48,7 @@ export const getAllChats = createAsyncThunk('getAllChats', async ({userId}, {rej
 
 export const createChat = createAsyncThunk('createChat', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch(`https://bazarify-website-backend-production.up.railway.app/chat`, {
+        const response = await fetch(`${backendUrl}/chat`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

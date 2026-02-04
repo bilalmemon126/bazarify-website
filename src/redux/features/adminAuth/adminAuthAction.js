@@ -1,8 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002'
+
 export const adminAuthLogin = createAsyncThunk('adminAuthLogin', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch('https://bazarify-website-backend-production.up.railway.app/admin/login', {
+        const response = await fetch(`${backendUrl}/admin/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -25,7 +27,7 @@ export const adminAuthLogin = createAsyncThunk('adminAuthLogin', async (data, {r
 
 export const adminAuthLogout = createAsyncThunk('adminAuthLogout', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch('https://bazarify-website-backend-production.up.railway.app/admin/logout', {
+        const response = await fetch(`${backendUrl}/admin/logout`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

@@ -1,8 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002'
+
 export const adminGetProducts = createAsyncThunk('adminGetProducts', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch('https://bazarify-website-backend-production.up.railway.app/admin/product', {
+        const response = await fetch(`${backendUrl}/admin/product`, {
             method: "GET",
             credentials: "include"
         })
@@ -21,7 +23,7 @@ export const adminGetProducts = createAsyncThunk('adminGetProducts', async (data
 
 export const adminEditProducts = createAsyncThunk('adminEditProducts', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch(`https://bazarify-website-backend-production.up.railway.app/admin/product/${data}/${localStorage.getItem("adminId")}`, {
+        const response = await fetch(`${backendUrl}/admin/product/${data}/${localStorage.getItem("adminId")}`, {
             method: "PUT",
             credentials: "include"
         })

@@ -1,9 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { createQueryParams } from "../../../utils/createQueryParams";
 
+
+const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002'
+console.log(backendUrl)
+
 export const addProduct = createAsyncThunk('addProduct', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch(`https://bazarify-website-backend-production.up.railway.app/product/${localStorage.getItem('userId')}`, {
+        const response = await fetch(`${backendUrl}/product/${localStorage.getItem('userId')}`, {
             method: "POST",
             body: data,
             credentials: "include"
@@ -25,7 +29,7 @@ export const addProduct = createAsyncThunk('addProduct', async (data, {rejectWit
 export const getProducts = createAsyncThunk('getProducts', async (data={}, {rejectWithValue}) => {
     try{
         let queryString = createQueryParams(data)
-        const response = await fetch(`https://bazarify-website-backend-production.up.railway.app/product?${queryString}`, {
+        const response = await fetch(`${backendUrl}/product?${queryString}`, {
             method: "GET",
             credentials: "include"
         })
@@ -46,7 +50,7 @@ export const getProducts = createAsyncThunk('getProducts', async (data={}, {reje
 export const getHomeProducts = createAsyncThunk('getHomeProducts', async (data={}, {rejectWithValue}) => {
     try{
         let queryString = createQueryParams(data)
-        const response = await fetch(`https://bazarify-website-backend-production.up.railway.app/product/home?${queryString}`, {
+        const response = await fetch(`${backendUrl}/product/home?${queryString}`, {
             method: "GET",
             credentials: "include"
         })
@@ -66,7 +70,7 @@ export const getHomeProducts = createAsyncThunk('getHomeProducts', async (data={
 
 export const getProductDetails = createAsyncThunk('getProductDetails', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch(`https://bazarify-website-backend-production.up.railway.app/product/${data}`, {
+        const response = await fetch(`${backendUrl}/product/${data}`, {
             method: "GET",
             credentials: "include"
         })
@@ -85,7 +89,7 @@ export const getProductDetails = createAsyncThunk('getProductDetails', async (da
 
 export const editProduct = createAsyncThunk('editProduct', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch(`https://bazarify-website-backend-production.up.railway.app/product/${localStorage.getItem('productId')}/${localStorage.getItem('userId')}`, {
+        const response = await fetch(`${backendUrl}/product/${localStorage.getItem('productId')}/${localStorage.getItem('userId')}`, {
             method: "PUT",
             body: data,
             credentials: "include"
@@ -105,7 +109,7 @@ export const editProduct = createAsyncThunk('editProduct', async (data, {rejectW
 
 export const deleteProduct = createAsyncThunk('deleteProduct', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch(`https://bazarify-website-backend-production.up.railway.app/product/${data}/${localStorage.getItem('userId')}`, {
+        const response = await fetch(`${backendUrl}/product/${data}/${localStorage.getItem('userId')}`, {
             method: "DELETE",
             credentials: "include"
         })

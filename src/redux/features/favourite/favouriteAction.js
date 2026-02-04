@@ -1,8 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002'
+
 export const getFavouriteProducts = createAsyncThunk('getFavouriteProducts', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch(`https://bazarify-website-backend-production.up.railway.app/favourite/${localStorage.getItem("userId")}`, {
+        const response = await fetch(`${backendUrl}/favourite/${localStorage.getItem("userId")}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -24,7 +26,7 @@ export const getFavouriteProducts = createAsyncThunk('getFavouriteProducts', asy
 
 export const addFavouriteProducts = createAsyncThunk('addFavouriteProducts', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch(`https://bazarify-website-backend-production.up.railway.app/favourite/${data}/${localStorage.getItem("userId")}`, {
+        const response = await fetch(`${backendUrl}/favourite/${data}/${localStorage.getItem("userId")}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

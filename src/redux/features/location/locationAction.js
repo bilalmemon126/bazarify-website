@@ -1,8 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002'
+
 export const getLocation = createAsyncThunk('getLocation', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch(`https://bazarify-website-backend-production.up.railway.app/location`, {
+        const response = await fetch(`${backendUrl}/location`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
