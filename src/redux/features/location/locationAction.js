@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit"
 
 export const getLocation = createAsyncThunk('getLocation', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch(`bazarify-website-backend-production.up.railway.app/location`, {
+        const response = await fetch(`http://localhost:3002/location`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit"
 
 export const getChat = createAsyncThunk('getChat', async ({productId, userId}, {rejectWithValue}) => {
     try{
-        const response = await fetch(`bazarify-website-backend-production.up.railway.app/chat/${productId}/${userId}`, {
+        const response = await fetch(`http://localhost:3002/chat/${productId}/${userId}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -25,7 +25,7 @@ export const getChat = createAsyncThunk('getChat', async ({productId, userId}, {
 export const getAllChats = createAsyncThunk('getAllChats', async ({userId}, {rejectWithValue}) => {
     console.log("userId ", userId)
     try{
-        const response = await fetch(`bazarify-website-backend-production.up.railway.app/chat/${userId}`, {
+        const response = await fetch(`http://localhost:3002/chat/${userId}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -46,7 +46,7 @@ export const getAllChats = createAsyncThunk('getAllChats', async ({userId}, {rej
 
 export const createChat = createAsyncThunk('createChat', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch(`bazarify-website-backend-production.up.railway.app/chat`, {
+        const response = await fetch(`http://localhost:3002/chat`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
