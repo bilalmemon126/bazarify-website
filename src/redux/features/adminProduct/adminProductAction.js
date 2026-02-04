@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit"
 
 export const adminGetProducts = createAsyncThunk('adminGetProducts', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch('http://localhost:3002/admin/product', {
+        const response = await fetch('https://bazarify-website-backend-production.up.railway.app/admin/product', {
             method: "GET",
             credentials: "include"
         })
@@ -21,7 +21,7 @@ export const adminGetProducts = createAsyncThunk('adminGetProducts', async (data
 
 export const adminEditProducts = createAsyncThunk('adminEditProducts', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch(`http://localhost:3002/admin/product/${data}/${localStorage.getItem("adminId")}`, {
+        const response = await fetch(`https://bazarify-website-backend-production.up.railway.app/admin/product/${data}/${localStorage.getItem("adminId")}`, {
             method: "PUT",
             credentials: "include"
         })

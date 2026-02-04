@@ -14,28 +14,28 @@ function Categories() {
     <div className='w-full grid grid-cols-12 py-5'>
       <div className='col-span-10 col-start-2 grid grid-cols-4 gap-5'>
         <div className='grid items-center justify-center rounded-full overflow-hidden'>
-          <CategoriesCard cardImage={mobiles} cardPath={"/product/mobile"} />
+          <CategoriesCard cardImage={mobiles} cardPath={"/product?category=mobile"} />
         </div>
         <div className='grid items-center justify-center rounded-md overflow-hidden'>
-          <CategoriesCard cardImage={bikes} cardPath={"/product/bike"} />
+          <CategoriesCard cardImage={bikes} cardPath={"/product?category=bike"} />
         </div>
         <div className='grid items-center justify-center rounded-md overflow-hidden'>
-          <CategoriesCard cardImage={cars} cardPath={"/product/car"} />
+          <CategoriesCard cardImage={cars} cardPath={"/product?category=car"} />
         </div>
         <div className='grid items-center justify-center rounded-md overflow-hidden'>
-          <CategoriesCard cardImage={fashion} cardPath={"/product/fashion"} />
+          <CategoriesCard cardImage={fashion} cardPath={"/product?category=fashion"} />
         </div>
         <div className='grid items-center justify-center rounded-md overflow-hidden'>
-          <CategoriesCard cardImage={house} cardPath={"/product/house"} />
+          <CategoriesCard cardImage={house} cardPath={"/product?category=house"} />
         </div>
         <div className='grid items-center justify-center rounded-md overflow-hidden'>
-          <CategoriesCard cardImage={electronics} cardPath={"/product/electronics"} />
+          <CategoriesCard cardImage={electronics} cardPath={"/product?category=electronics"} />
         </div>
         <div className='grid items-center justify-center rounded-md overflow-hidden'>
-          <CategoriesCard cardImage={kids} cardPath={"/product/kids"} />
+          <CategoriesCard cardImage={kids} cardPath={"/product?category=kids"} />
         </div>
         <div className='grid items-center justify-center rounded-md overflow-hidden'>
-          <CategoriesCard cardImage={furniture} cardPath={"/product/furniture"} />
+          <CategoriesCard cardImage={furniture} cardPath={"/product?category=furniture"} />
         </div>
       </div>
     </div>
