@@ -3,7 +3,7 @@ import { createQueryParams } from "../../../utils/createQueryParams";
 
 export const addProduct = createAsyncThunk('addProduct', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch(`https://bazarify-website-backend.vercel.app/product/${localStorage.getItem('userId')}`, {
+        const response = await fetch(`bazarify-website-backend-production.up.railway.app/product/${localStorage.getItem('userId')}`, {
             method: "POST",
             body: data,
             credentials: "include"
@@ -25,7 +25,7 @@ export const addProduct = createAsyncThunk('addProduct', async (data, {rejectWit
 export const getProducts = createAsyncThunk('getProducts', async (data={}, {rejectWithValue}) => {
     try{
         let queryString = createQueryParams(data)
-        const response = await fetch(`https://bazarify-website-backend.vercel.app/product?${queryString}`, {
+        const response = await fetch(`bazarify-website-backend-production.up.railway.app/product?${queryString}`, {
             method: "GET",
             credentials: "include"
         })
@@ -46,7 +46,7 @@ export const getProducts = createAsyncThunk('getProducts', async (data={}, {reje
 export const getHomeProducts = createAsyncThunk('getHomeProducts', async (data={}, {rejectWithValue}) => {
     try{
         let queryString = createQueryParams(data)
-        const response = await fetch(`https://bazarify-website-backend.vercel.app/product/home?${queryString}`, {
+        const response = await fetch(`bazarify-website-backend-production.up.railway.app/product/home?${queryString}`, {
             method: "GET",
             credentials: "include"
         })
@@ -66,7 +66,7 @@ export const getHomeProducts = createAsyncThunk('getHomeProducts', async (data={
 
 export const getProductDetails = createAsyncThunk('getProductDetails', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch(`https://bazarify-website-backend.vercel.app/product/${data}`, {
+        const response = await fetch(`bazarify-website-backend-production.up.railway.app/product/${data}`, {
             method: "GET",
             credentials: "include"
         })
@@ -85,7 +85,7 @@ export const getProductDetails = createAsyncThunk('getProductDetails', async (da
 
 export const editProduct = createAsyncThunk('editProduct', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch(`https://bazarify-website-backend.vercel.app/product/${localStorage.getItem('productId')}/${localStorage.getItem('userId')}`, {
+        const response = await fetch(`bazarify-website-backend-production.up.railway.app/product/${localStorage.getItem('productId')}/${localStorage.getItem('userId')}`, {
             method: "PUT",
             body: data,
             credentials: "include"
@@ -105,7 +105,7 @@ export const editProduct = createAsyncThunk('editProduct', async (data, {rejectW
 
 export const deleteProduct = createAsyncThunk('deleteProduct', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch(`https://bazarify-website-backend.vercel.app/product/${data}/${localStorage.getItem('userId')}`, {
+        const response = await fetch(`bazarify-website-backend-production.up.railway.app/product/${data}/${localStorage.getItem('userId')}`, {
             method: "DELETE",
             credentials: "include"
         })

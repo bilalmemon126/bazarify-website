@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const registerUser = createAsyncThunk('registerUser', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch('https://bazarify-website-backend.vercel.app/register', {
+        const response = await fetch('bazarify-website-backend-production.up.railway.app/register', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -24,7 +24,7 @@ export const registerUser = createAsyncThunk('registerUser', async (data, {rejec
 
 export const otpVerification = createAsyncThunk('otpVerification', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch(`https://bazarify-website-backend.vercel.app/user-otpverification/${localStorage.getItem('userId')}`, {
+        const response = await fetch(`bazarify-website-backend-production.up.railway.app/user-otpverification/${localStorage.getItem('userId')}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -47,7 +47,7 @@ export const otpVerification = createAsyncThunk('otpVerification', async (data, 
 
 export const loginUser = createAsyncThunk('loginUser', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch('https://bazarify-website-backend.vercel.app/login', {
+        const response = await fetch('bazarify-website-backend-production.up.railway.app/login', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -70,7 +70,7 @@ export const loginUser = createAsyncThunk('loginUser', async (data, {rejectWithV
 
 export const logoutUser = createAsyncThunk('logoutUser', async (data, {rejectWithValue}) => {
     try{
-        const response = await fetch('https://bazarify-website-backend.vercel.app/logout', {
+        const response = await fetch('bazarify-website-backend-production.up.railway.app/logout', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
