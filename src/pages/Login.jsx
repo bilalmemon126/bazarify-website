@@ -24,8 +24,8 @@ function Login() {
   return (
     <>
       <div className='w-full h-screen flex items-center justify-center'>
-        <div className='w-[35%] bg-brand-light rounded-md p-5 flex flex-col gap-7.5 shadow-lg items-center'>
-          <h1 className='w-full text-3xl text-center font-semibold pb-3 text-brand-primary border-b border-brand-light'>Login</h1>
+        <div className='min-w-80 w-[35%] max-w-[450px] bg-brand-light rounded-md p-5 flex flex-col gap-7.5 shadow-lg items-center'>
+          <h1 className='w-full text-2xl sm:text-3xl text-center font-semibold pb-3 text-brand-primary border-b border-brand-light'>Login</h1>
           <form action="/login" className='w-full flex flex-col gap-5'>
             <input type="email" onChange={(e) => { setInput((prev) => ({ ...prev, email: e.target.value })) }} name='email' placeholder='Enter Email' required className={`bg-white p-2.5 rounded ${error ? "border border-red-600" : ""}`} value={input.email} />
             <input type="password" onChange={(e) => { setInput((prev) => ({ ...prev, password: e.target.value })) }} name='password' placeholder='Enter Password' required className={`bg-white p-2.5 rounded ${error ? "border border-red-600" : ""}`} value={input.password} />

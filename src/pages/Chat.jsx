@@ -70,8 +70,6 @@ function Chat() {
             socket.off("receiveMessage", handleReceiveMessage)
         }
     }, [])
-
-    console.log(productDetails)
     return productDetailsLoading ? (
         <p>loading...</p>
     ) :

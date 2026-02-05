@@ -15,7 +15,6 @@ function Category() {
     useEffect(() => {
         dispatch(getCategory())
     }, [])
-    console.log(input)
 
     let handleAdd = async () => {
         await dispatch(addCategory(input))

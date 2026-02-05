@@ -29,8 +29,8 @@ function Signup() {
 
   return (
     <div className='w-full h-screen flex justify-center items-center'>
-      <div className='w-[35%] bg-brand-light rounded-md p-5 flex flex-col gap-7.5 shadow-lg items-center'>
-        <h1 className='w-full text-3xl text-center font-semibold pb-3 text-brand-primary border-b border-brand-light'>Sign Up </h1>
+      <div className='min-w-80 w-[35%] max-w-[450px] bg-brand-light rounded-md p-5 flex flex-col gap-7.5 shadow-lg items-center'>
+        <h1 className='w-full text-2xl sm:text-3xl text-center font-semibold pb-3 text-brand-primary border-b border-brand-light'>Sign Up </h1>
         <form className='w-full flex flex-col gap-5'>
           <input type="text" className={`bg-white p-2.5 rounded ${error ? "border border-red-600" : ""}`} onChange={(e) => { handleInput(e) }} name='firstName' placeholder="First Name" required />
           <input type="text" className={`bg-white p-2.5 rounded ${error ? "border border-red-600" : ""}`} onChange={(e) => { handleInput(e) }} name='lastName' placeholder="Last Name" required />

@@ -3,7 +3,6 @@ import { createQueryParams } from "../../../utils/createQueryParams";
 
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002'
-console.log(backendUrl)
 
 export const addProduct = createAsyncThunk('addProduct', async (data, {rejectWithValue}) => {
     try{
@@ -17,7 +16,6 @@ export const addProduct = createAsyncThunk('addProduct', async (data, {rejectWit
             return rejectWithValue(error)
         }
         const result = await response.json()
-        console.log(result)
         return result
     }
     catch(error){

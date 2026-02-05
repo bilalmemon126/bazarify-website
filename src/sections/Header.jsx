@@ -6,7 +6,7 @@ import { HiPlus } from 'react-icons/hi'
 import { FiSearch } from 'react-icons/fi'
 import { IoChatbubbleEllipsesOutline, IoLocationOutline } from 'react-icons/io5'
 import { CiMenuFries } from 'react-icons/ci'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { IoMdArrowDropdown } from 'react-icons/io'
 import { FaRegHeart } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
@@ -17,9 +17,12 @@ import { BiLogOut } from 'react-icons/bi'
 import { getLocation } from '../redux/features/location/locationAction'
 
 function Header() {
-  let [input, setInput] = useState({ search: "", city: "" })
+  let [input, setInput] = useState({ productSearch: "", city: "" })
   let [responsiveNav, setResponsiveNav] = useState(false)
   let [isOpen, setIsOpen] = useState(false)
+
+  const { search } = useLocation()
+  const params = new URLSearchParams(search)
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -36,6 +39,20 @@ function Header() {
     if (response.payload.status) {
       navigate("/login")
     }
+  }
+
+  let handleFilter = (key, value) => {
+    if(value){
+      params.set(key, value)
+    }
+    else{
+      params.delete(key)
+    }
+    navigate(`?${params.toString()}`)
+  }
+  const handleSearch = (e) => {
+    e.preventDefault()
+    handleFilter("search", input.productSearch)
   }
 
   return (
@@ -105,14 +122,14 @@ function Header() {
             id="city"
             name="city"
             value={input.city}
-            onChange={(e) => { setInput((prev) => ({ ...prev, city: e.target.value })), navigate(e.target.value) }}
+            onChange={(e) => { setInput((prev) => ({ ...prev, city: e.target.value })), handleFilter("location", e.target.value) }}
             className="mr-2.5 py-1.5 pr-7 pl-3 col-span-9 text-base text-brand-primary placeholder:text-brand-light outline-none sm:col-span-10 md:col-span-11"
           >
             <option value="">Select City</option>
             {
               location?.data?.map((v, i) => {
                 return (
-                  <option value={`?location=${v._id}`} key={i}>{v.location}</option>
+                  <option value={v._id} key={i}>{v.location}</option>
                 )
               })
             }
@@ -121,26 +138,28 @@ function Header() {
 
         <div className="p-1.5 grid gap-2.5 grid-cols-12 col-span-5 col-end-12 items-center rounded-md bg-white outline-1 outline-brand-primary focus-within:outline-2">
           <div className="w-full px-2.5 col-span-3 sm:col-span-2 md:col-span-1"><FiSearch className='text-brand-primary text-lg' /></div>
+          <form action="" onSubmit={(e) => {handleSearch(e)}}>
           <input
             name="search"
             type="text"
             placeholder="Search"
-            value={input.search}
-            onChange={(e) => { setInput({ search: e.target.value }) }}
+            value={input.productSearch}
+            onChange={(e) => { setInput((prev) => ({ ...prev, productSearch: e.target.value })) }}
             className="py-1.5 pl-1  text-base col-span-9 text-brand-primary placeholder:text-brand-primary focus:outline-none sm:col-span-10 md:col-span-11"
           />
+          </form>
         </div>
       </div>
 
       <nav className={`${responsiveNav ? "max-h-[500px] opacity-100 py-5" : "max-h-0 opacity-0"} static top-0 w-full h-fit overflow-hidden transition-all duration-500 ease-in-out grid grid-cols-12 items-center justify-center gap-2.5 sm:max-h-none sm:opacity-100 sm:grid sm:py-5`}>
         <ul className='list-none col-span-10 col-start-2 justify-center items-center text-center gap-2.5 sm:flex sm:col-start-2 sm:gap-10 sm:justify-start'>
-          <NavLink to={"/product"}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>All</li></NavLink>
-          <NavLink to={"/product?category=mobile"}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>Mobiles</li></NavLink>
-          <NavLink to={"/product?category=car"}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>Cars</li></NavLink>
-          <NavLink to={"/product?category=bike"}><li className='border-b-2 border-transparent hover:border-brand-primary'>Bikes</li></NavLink>
-          <NavLink to={"/product?category=house"}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>House</li></NavLink>
-          <NavLink to={"/product?category=tablet"}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>Tablets</li></NavLink>
-          <NavLink to={"/product?category=fashion"}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>Fashion</li></NavLink>
+          <NavLink to={"/product"} onClick={() => {setInput((prev) => ({ ...prev, productSearch: "", city: ""}))}}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>All</li></NavLink>
+          <NavLink to={"/product?category=mobile"} onClick={() => {setInput((prev) => ({ ...prev, productSearch: "", city: ""}))}}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>Mobiles</li></NavLink>
+          <NavLink to={"/product?category=car"} onClick={() => {setInput((prev) => ({ ...prev, productSearch: "", city: ""}))}}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>Cars</li></NavLink>
+          <NavLink to={"/product?category=bike"} onClick={() => {setInput((prev) => ({ ...prev, productSearch: "", city: ""}))}}><li className='border-b-2 border-transparent hover:border-brand-primary'>Bikes</li></NavLink>
+          <NavLink to={"/product?category=house"} onClick={() => {setInput((prev) => ({ ...prev, productSearch: "", city: ""}))}}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>House</li></NavLink>
+          <NavLink to={"/product?category=tablet"} onClick={() => {setInput((prev) => ({ ...prev, productSearch: "", city: ""}))}}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>Tablets</li></NavLink>
+          <NavLink to={"/product?category=fashion"} onClick={() => {setInput((prev) => ({ ...prev, productSearch: "", city: ""}))}}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>Fashion</li></NavLink>
         </ul>
         <div className='mt-3 col-span-10 col-start-2 grid grid-cols-2 gap-5 items-center justify-center sm:hidden'>
           {

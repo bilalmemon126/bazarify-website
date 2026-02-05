@@ -9,7 +9,6 @@ function ProductSection() {
     const { search } = useLocation()
     const params = new URLSearchParams(search)
     const navigate = useNavigate()
-    console.log(search)
 
     const { homeProducts, homeProductsError, homeProductsLoading } = useSelector((state) => state.products)
     const dispatch = useDispatch()
