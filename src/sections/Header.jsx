@@ -20,6 +20,7 @@ function Header() {
   let [input, setInput] = useState({ productSearch: "", city: "" })
   let [responsiveNav, setResponsiveNav] = useState(false)
   let [isOpen, setIsOpen] = useState(false)
+  let [count, setCount] = useState({favouriteCount: 0, chatCount: 0})
 
   const { search } = useLocation()
   const params = new URLSearchParams(search)
@@ -27,7 +28,9 @@ function Header() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  
+
+  const { favouriteProducts } = useSelector((state) => state.favouriteProducts)
+
   const { location } = useSelector((state) => state.locationSlice)
   useEffect(() => {
     dispatch(getLocation())
@@ -42,18 +45,20 @@ function Header() {
   }
 
   let handleFilter = (key, value) => {
-    if(value){
+    if (value) {
       params.set(key, value)
     }
-    else{
+    else {
       params.delete(key)
     }
-    navigate(`?${params.toString()}`)
+    navigate(`/product?${params.toString()}`)
   }
   const handleSearch = (e) => {
     e.preventDefault()
     handleFilter("search", input.productSearch)
   }
+
+
 
   return (
     <header className='w-full grid bg-white'>
@@ -66,8 +71,18 @@ function Header() {
             localStorage.getItem("userId") ?
               <div className='col-span-3 w-full flex items-center gap-5'>
                 <NavLink to={`/chat/${localStorage.getItem("userId")}`}><IoChatbubbleEllipsesOutline className='text-3xl text-brand-primary' /></NavLink>
-                <NavLink to={`/myfavourite/${localStorage.getItem("userId")}`}>
-                <FaRegHeart className='text-3xl' />
+                <NavLink to={`/myfavourite/${localStorage.getItem("userId")}`} onClick={() => {setCount((prev) => ({...prev, favouriteCount: favouriteProducts?.data?.length}))}}>
+                  <div className='flex'>
+                    <FaRegHeart className='text-3xl m-0.5' />
+                    {
+                      parseInt(favouriteProducts?.data?.length) - count.favouriteCount > 0 ?
+                        <div className='w-[15px] h-[15px] rounded-full bg-red-500 flex items-center justify-center absolute ml-5.5'>
+                          <p className='text-[8px] font-bold text-white'>{parseInt(favouriteProducts?.data?.length) - count.favouriteCount}</p>
+                        </div>
+                        :
+                        ""
+                    }
+                  </div>
                 </NavLink>
                 <div className='flex items-center'>
                   <div className='w-[40px] rounded-full overflow-hidden'>
@@ -138,28 +153,28 @@ function Header() {
 
         <div className="p-1.5 grid gap-2.5 grid-cols-12 col-span-5 col-end-12 items-center rounded-md bg-white outline-1 outline-brand-primary focus-within:outline-2">
           <div className="w-full px-2.5 col-span-3 sm:col-span-2 md:col-span-1"><FiSearch className='text-brand-primary text-lg' /></div>
-          <form action="" onSubmit={(e) => {handleSearch(e)}}>
-          <input
-            name="search"
-            type="text"
-            placeholder="Search"
-            value={input.productSearch}
-            onChange={(e) => { setInput((prev) => ({ ...prev, productSearch: e.target.value })) }}
-            className="py-1.5 pl-1  text-base col-span-9 text-brand-primary placeholder:text-brand-primary focus:outline-none sm:col-span-10 md:col-span-11"
-          />
+          <form action="" onSubmit={(e) => { handleSearch(e) }}>
+            <input
+              name="search"
+              type="text"
+              placeholder="Search"
+              value={input.productSearch}
+              onChange={(e) => { setInput((prev) => ({ ...prev, productSearch: e.target.value })) }}
+              className="py-1.5 pl-1  text-base col-span-9 text-brand-primary placeholder:text-brand-primary focus:outline-none sm:col-span-10 md:col-span-11"
+            />
           </form>
         </div>
       </div>
 
       <nav className={`${responsiveNav ? "max-h-[500px] opacity-100 py-5" : "max-h-0 opacity-0"} static top-0 w-full h-fit overflow-hidden transition-all duration-500 ease-in-out grid grid-cols-12 items-center justify-center gap-2.5 sm:max-h-none sm:opacity-100 sm:grid sm:py-5`}>
         <ul className='list-none col-span-10 col-start-2 justify-center items-center text-center gap-2.5 sm:flex sm:col-start-2 sm:gap-10 sm:justify-start'>
-          <NavLink to={"/product"} onClick={() => {setInput((prev) => ({ ...prev, productSearch: "", city: ""}))}}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>All</li></NavLink>
-          <NavLink to={"/product?category=mobile"} onClick={() => {setInput((prev) => ({ ...prev, productSearch: "", city: ""}))}}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>Mobiles</li></NavLink>
-          <NavLink to={"/product?category=car"} onClick={() => {setInput((prev) => ({ ...prev, productSearch: "", city: ""}))}}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>Cars</li></NavLink>
-          <NavLink to={"/product?category=bike"} onClick={() => {setInput((prev) => ({ ...prev, productSearch: "", city: ""}))}}><li className='border-b-2 border-transparent hover:border-brand-primary'>Bikes</li></NavLink>
-          <NavLink to={"/product?category=house"} onClick={() => {setInput((prev) => ({ ...prev, productSearch: "", city: ""}))}}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>House</li></NavLink>
-          <NavLink to={"/product?category=tablet"} onClick={() => {setInput((prev) => ({ ...prev, productSearch: "", city: ""}))}}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>Tablets</li></NavLink>
-          <NavLink to={"/product?category=fashion"} onClick={() => {setInput((prev) => ({ ...prev, productSearch: "", city: ""}))}}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>Fashion</li></NavLink>
+          <NavLink to={"/product"} onClick={() => { setInput((prev) => ({ ...prev, productSearch: "", city: "" })) }}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>All</li></NavLink>
+          <NavLink to={"/product?category=mobile"} onClick={() => { setInput((prev) => ({ ...prev, productSearch: "", city: "" })) }}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>Mobiles</li></NavLink>
+          <NavLink to={"/product?category=car"} onClick={() => { setInput((prev) => ({ ...prev, productSearch: "", city: "" })) }}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>Cars</li></NavLink>
+          <NavLink to={"/product?category=bike"} onClick={() => { setInput((prev) => ({ ...prev, productSearch: "", city: "" })) }}><li className='border-b-2 border-transparent hover:border-brand-primary'>Bikes</li></NavLink>
+          <NavLink to={"/product?category=house"} onClick={() => { setInput((prev) => ({ ...prev, productSearch: "", city: "" })) }}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>House</li></NavLink>
+          <NavLink to={"/product?category=tablet"} onClick={() => { setInput((prev) => ({ ...prev, productSearch: "", city: "" })) }}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>Tablets</li></NavLink>
+          <NavLink to={"/product?category=fashion"} onClick={() => { setInput((prev) => ({ ...prev, productSearch: "", city: "" })) }}><li className={"border-b-2 border-transparent hover:border-brand-primary"}>Fashion</li></NavLink>
         </ul>
         <div className='mt-3 col-span-10 col-start-2 grid grid-cols-2 gap-5 items-center justify-center sm:hidden'>
           {

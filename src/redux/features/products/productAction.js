@@ -45,10 +45,9 @@ export const getProducts = createAsyncThunk('getProducts', async (data={}, {reje
 })
 
 
-export const getHomeProducts = createAsyncThunk('getHomeProducts', async (data={}, {rejectWithValue}) => {
+export const getHomeProducts = createAsyncThunk('getHomeProducts', async (data, {rejectWithValue}) => {
     try{
-        let queryString = createQueryParams(data)
-        const response = await fetch(`${backendUrl}/product/home?${queryString}`, {
+        const response = await fetch(`${backendUrl}/product/home`, {
             method: "GET",
             credentials: "include"
         })
