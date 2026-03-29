@@ -6,6 +6,9 @@ import Login from './pages/Login'
 import Signup from './pages/Signup'
 import OtpVerification from './pages/OtpVerification'
 import ForgotPassword from './pages/ForgotPassword'
+import ForgotPasswordOtp from './pages/ForgotPasswordOtp'
+import ResetPassword from './pages/ResetPassword'
+import ResetPasswordProtectedRoute from './ResetPasswordProtectedRoute'
 import ChooseCategory from './pages/ChooseCategory'
 import AddProduct from './pages/AddProduct'
 import ProductDetails from './pages/ProductDetails'
@@ -36,8 +39,16 @@ function App() {
       element: <OtpVerification />
     },
     {
-      path: "/forgotpassword",
+      path: "/forgot-password",
       element: <ForgotPassword />
+    },
+    {
+      path: "/forgot-password-otp/:id",
+      element: <ForgotPasswordOtp />
+    },
+    {
+      path: "/reset-password/:id",
+      element: <ResetPasswordProtectedRoute children={<ResetPassword />} />
     },
     {
       path: "/",
@@ -68,11 +79,11 @@ function App() {
           element: <ProtectedRoute children={<ProductDetails />} />
         },
         {
-          path: "/chat/:myId/:productId", 
+          path: "/chat/:myChatId/:productId", 
           element: <ProtectedRoute children={<Chat />} />
         },
         {
-          path: "/chat/:myId", 
+          path: "/chat/:myChatId", 
           element: <ProtectedRoute children={<Chat />} />
         },
         {

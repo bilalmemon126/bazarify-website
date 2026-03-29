@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginUser, logoutUser, otpVerification, registerUser } from "./userAction";
+import { forgotPassword, forgotPasswordOtp, loginUser, logoutUser, otpVerification, registerUser, resetPassword } from "./userAction";
 
 export const userSlice = createSlice({
     name: "userSlice",
@@ -45,10 +45,48 @@ export const userSlice = createSlice({
             .addCase(loginUser.fulfilled, (state, action) => {
                 state.loading = false;
                 state.user = action.payload;
+                console.log(action.payload)
                 localStorage.setItem("userId", action.payload.data._id)
                 localStorage.setItem("firstName", action.payload.data.firstName)
             })
             .addCase(loginUser.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+
+            .addCase(forgotPassword.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(forgotPassword.fulfilled, (state, action) => {
+                state.loading = false;
+                state.user = action.payload;
+                localStorage.setItem("userId", action.payload.userId)
+            })
+            .addCase(forgotPassword.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+
+            .addCase(forgotPasswordOtp.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(forgotPasswordOtp.fulfilled, (state, action) => {
+                state.loading = false;
+                state.user = action.payload;
+            })
+            .addCase(forgotPasswordOtp.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+
+            .addCase(resetPassword.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(resetPassword.fulfilled, (state, action) => {
+                state.loading = false;
+                state.user = action.payload;
+            })
+            .addCase(resetPassword.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
             })

@@ -69,6 +69,71 @@ export const loginUser = createAsyncThunk('loginUser', async (data, {rejectWithV
     }
 })
 
+export const forgotPassword = createAsyncThunk('forgotPassword', async (data, {rejectWithValue}) => {
+    try{
+        const response = await fetch(`${backendUrl}/forgot-password`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            credentials: 'include',
+            body:JSON.stringify(data),
+        })
+        if(!response.ok){
+            const error = await response.json()
+            return rejectWithValue(error)
+        }
+        const result = await response.json()
+        return result
+    }
+    catch(err){
+        return rejectWithValue(err)
+    }
+})
+
+export const forgotPasswordOtp = createAsyncThunk('forgotPasswordOtp', async (data, {rejectWithValue}) => {
+    try{
+        const response = await fetch(`${backendUrl}/verify-otp/${data.userId}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            credentials: 'include',
+            body:JSON.stringify(data),
+        })
+        if(!response.ok){
+            const error = await response.json()
+            return rejectWithValue(error)
+        }
+        const result = await response.json()
+        return result
+    }
+    catch(err){
+        return rejectWithValue(err)
+    }
+})
+
+export const resetPassword = createAsyncThunk('resetPassword', async (data, {rejectWithValue}) => {
+    try{
+        const response = await fetch(`${backendUrl}/reset-password/${data.userId}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            credentials: 'include',
+            body:JSON.stringify(data),
+        })
+        if(!response.ok){
+            const error = await response.json()
+            return rejectWithValue(error)
+        }
+        const result = await response.json()
+        return result
+    }
+    catch(err){
+        return rejectWithValue(err)
+    }
+})
 
 export const logoutUser = createAsyncThunk('logoutUser', async (data, {rejectWithValue}) => {
     try{

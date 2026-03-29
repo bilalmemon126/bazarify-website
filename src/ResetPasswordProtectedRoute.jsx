@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { protectedRoute } from './redux/features/protected/protectedAction'
+import { resetPasswordProtectedRoute } from './redux/features/protected/protectedAction'
 import { useNavigate } from 'react-router-dom'
 
-function ProtectedRoute({ children }) {
+function ResetPasswordProtectedRoute({ children }) {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -14,9 +14,8 @@ function ProtectedRoute({ children }) {
   }, [])
 
   const checkVerifiedUser = async () => {
-    const response = await dispatch(protectedRoute())
+    const response = await dispatch(resetPasswordProtectedRoute())
     if (!response.payload.status) {
-      localStorage.clear()
       return navigate("/login")
     }
     if (response.payload.status) {
@@ -33,4 +32,4 @@ function ProtectedRoute({ children }) {
     )
 }
 
-export default ProtectedRoute
+export default ResetPasswordProtectedRoute

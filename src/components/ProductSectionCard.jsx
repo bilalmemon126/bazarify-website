@@ -10,8 +10,9 @@ function ProductSectionCard({ image, price, title, productId }) {
 
     const { favouriteProducts } = useSelector((state) => state.favouriteProducts)
 
-    const handleFavourite = (data) => {
-        dispatch(addFavouriteProducts(data))
+    const handleFavourite = async (data) => {
+        await dispatch(addFavouriteProducts(data))
+        dispatch(getFavouriteProducts())
     }
 
     const isFavorited = favouriteProducts?.data?.some(v => v.productId._id === productId);
@@ -28,9 +29,9 @@ function ProductSectionCard({ image, price, title, productId }) {
                 <p className='w-full col-span-1 grid items-center justify-end'>
                     {
                         isFavorited ?
-                        <FaHeart className='text-red-500 text-lg' onClick={() => { handleFavourite(productId) }} />
-                        :
-                        <FaRegHeart className='text-lg' onClick={() => { handleFavourite(productId) }} />
+                            <FaHeart className='text-red-500 text-lg' onClick={() => { handleFavourite(productId) }} />
+                            :
+                            <FaRegHeart className='text-lg' onClick={() => { handleFavourite(productId) }} />
                     }
                 </p>
                 <p className='col-span-3'>{title.slice(0, 36) + "..."}</p>

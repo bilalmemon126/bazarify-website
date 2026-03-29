@@ -34,7 +34,7 @@ function Login() {
           </form>
           <div id="signUpAndForgotPassword" className='w-full flex justify-between px-5'>
             <NavLink to={"/register"} className={"signUp"}>Sign up</NavLink>
-            <NavLink to={"/forgotpassword"} className={"forgotPassword"}>Forgot Password</NavLink>
+            <NavLink to={"/forgot-password"} className={"forgotPassword"}>Forgot Password</NavLink>
           </div>
         </div>
       </div>

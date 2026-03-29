@@ -37,7 +37,6 @@ export const favouriteSlice = createSlice({
         })
         .addCase(addFavouriteProducts.fulfilled, (state, action) => {
             state.favouriteProductsMessage = action.payload.message
-            state.favouriteProducts = []
             state.error = null
             state.loading = false
 
