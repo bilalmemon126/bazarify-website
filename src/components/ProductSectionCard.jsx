@@ -10,9 +10,8 @@ function ProductSectionCard({ image, price, title, productId }) {
 
     const { favouriteProducts } = useSelector((state) => state.favouriteProducts)
 
-    const handleFavourite = async (data) => {
-        await dispatch(addFavouriteProducts(data))
-        dispatch(getFavouriteProducts())
+    const handleFavourite = (productId) => {
+        dispatch(addFavouriteProducts(productId))
     }
 
     const isFavorited = favouriteProducts?.data?.some(v => v.productId._id === productId);

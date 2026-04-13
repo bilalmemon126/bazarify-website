@@ -11,6 +11,7 @@ function Category() {
 
     const { category, error, loading } = useSelector((state) => state.categorySlice)
     const dispatch = useDispatch()
+    console.log(category)
 
     useEffect(() => {
         dispatch(getCategory())
@@ -76,7 +77,13 @@ function Category() {
                                             </thead>
 
                                             <tbody>
-                                                {category?.data?.map((v, i) => (
+                                                {(Array.isArray(category?.data) ? category?.data : [category?.data])
+                                                .filter(Boolean)
+                                                .map((v, i) => (
+                                                    <>
+                                                    {
+                                                        console.log(v)
+                                                    }
                                                     <tr
                                                         key={i}
                                                         className="bg-[rgb(35,35,35)] border-b-2 border-black hover:bg-[rgb(45,45,45)] transition"
@@ -142,6 +149,7 @@ function Category() {
                                                             </div>
                                                         </td>
                                                     </tr>
+                                                    </>
                                                 ))}
                                             </tbody>
                                         </table>

@@ -29,7 +29,7 @@ function Inbox({ userId, setOpen, setRoomAndProductId }) {
 
 
     let handleSelectChat = (userId, productId, buyerId) => {
-        navigate(`/chat/${userId}`)
+        // navigate(`/chat/${userId}`)
         const found = allChats?.find(v => v.productId._id === productId && v.buyerId._id === buyerId)
         const roomId = found?.roomId
         setRoomAndProductId((prev) => ({ ...prev, roomId: roomId, productId: productId }))

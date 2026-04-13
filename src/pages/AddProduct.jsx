@@ -5,6 +5,7 @@ import Button from '../components/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { addProduct, editProduct, getProductDetails } from '../redux/features/products/productAction';
 import { getLocation } from '../redux/features/location/locationAction'
+import { toast } from 'react-toastify';
 
 function AddProduct() {
   const [singleImagePreviews, setSingleImagePreviews] = useState([]);
@@ -76,7 +77,7 @@ function AddProduct() {
         status: productDetails?.data?.status || "active"
       }))
     }
-    
+
     if (productDetails?.data?.mainImage) {
       setSingleImagePreviews(productDetails?.data?.mainImage.secure_url)
     }
@@ -89,22 +90,22 @@ function AddProduct() {
   const formData = new FormData()
 
   formData.append("category", categoryName)
-  
-  if(input.images.length > 0){
+
+  if (input.images.length > 0) {
     input.images.forEach((file) => {
-      if(file.secure_url){
+      if (file.secure_url) {
         formData.append("images", JSON.stringify(file))
       }
-      if(!file.secure_url){
+      if (!file.secure_url) {
         formData.append("images", file)
       }
     })
   }
 
-  if(input.mainImage.secure_url){
+  if (input.mainImage.secure_url) {
     formData.append("mainImage", JSON.stringify(input.mainImage))
   }
-  if(!input.mainImage.secure_url){
+  if (!input.mainImage.secure_url) {
     formData.append("mainImage", input.mainImage)
   }
 
@@ -125,23 +126,36 @@ function AddProduct() {
   formData.append("productId", productId)
 
   // add product
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const response = await dispatch(addProduct(formData))
-
-    if (response.payload.status) {
+    const promise = dispatch(addProduct(formData)).then((response) => {
+      if (!response.payload.status) throw new Error('Something Went Wrong!');
       navigate('/')
-    }
+    })
+
+    toast.promise(promise, {
+      pending: 'Posting your product...',
+      success: 'Product Posted Successfully!',
+      error: 'Something Went Wrong!'
+    })
   }
 
   // edit product
 
   const handleEditProduct = async (e) => {
     e.preventDefault();
-    const response = await dispatch(editProduct(formData))
+    const promise = dispatch(editProduct(formData)).then((response) => {
+      if (!response.payload.status) throw new Error('Something Went Wrong!');
 
-    if (response.payload.status) {
       navigate(`/myads/${localStorage.getItem("userId")}`)
+    })
+
+    toast.promise(promise, {
+      pending: 'Updating your product...',
+      success: 'Product Updated Successfully!',
+      error: 'Something Went Wrong!'
+    })
+    if (response.payload.status) {
     }
   }
 
@@ -179,7 +193,7 @@ function AddProduct() {
                         {
                           v.secure_url ?
                             <img src={v.secure_url} alt="" />
-                          :
+                            :
                             <img src={v} alt="" />
                         }
                       </div>
@@ -193,7 +207,7 @@ function AddProduct() {
               categoryName == "bike" || categoryName == "car" ?
                 <div className='grid grid-cols-1 py-5 border-b border-brand-primary'>
                   <label htmlFor="make" className='py-2.5 text-brand-primary font-medium'>Make</label>
-                  <input type="text" id='make' className='p-2.5 rounded border border-brand-dark' onChange={(e) => { setInput((prev) => ({ ...prev, make: e.target.value })) }} value={input.make}  placeholder='Make' name="make" />
+                  <input type="text" id='make' className='p-2.5 rounded border border-brand-dark' onChange={(e) => { setInput((prev) => ({ ...prev, make: e.target.value })) }} value={input.make} placeholder='Make' name="make" />
                 </div> :
                 null
             }
@@ -253,7 +267,7 @@ function AddProduct() {
                   </div>
 
                   <div className='grid grid-cols-1 py-5 border-b border-brand-primary'>
-                  <label htmlFor="gender" className='py-2.5 text-brand-primary font-medium'>Gender</label>
+                    <label htmlFor="gender" className='py-2.5 text-brand-primary font-medium'>Gender</label>
                     <select
                       name="gender"
                       id='gender'
@@ -285,9 +299,9 @@ function AddProduct() {
               <label htmlFor="price" className='py-2.5 text-brand-primary font-medium'>Price</label>
               <input type="number" id='price' className='p-2.5 rounded border border-brand-dark' onChange={(e) => { setInput((prev) => ({ ...prev, price: e.target.value })) }} value={input.price} placeholder='Enter Price' name="price" />
             </div>
-            
+
             <div className='grid grid-cols-1 py-5 border-b border-brand-primary'>
-            <label htmlFor="condition" className='py-2.5 text-brand-primary font-medium'>Condition</label>
+              <label htmlFor="condition" className='py-2.5 text-brand-primary font-medium'>Condition</label>
               <select
                 id="condition"
                 name="condition"
@@ -301,7 +315,7 @@ function AddProduct() {
             </div>
 
             <div className='grid grid-cols-1 py-5 border-b border-brand-primary'>
-            <label htmlFor="city" className='py-2.5 text-brand-primary font-medium'>City</label>
+              <label htmlFor="city" className='py-2.5 text-brand-primary font-medium'>City</label>
               <select
                 id="city"
                 name="city"
@@ -311,7 +325,7 @@ function AddProduct() {
               >
                 <option value="">Select City</option>
                 {
-                  location?.data?.map((v,i) => {
+                  location?.data?.map((v, i) => {
                     return (
                       <option value={v._id} key={i}>{v.location}</option>
                     )

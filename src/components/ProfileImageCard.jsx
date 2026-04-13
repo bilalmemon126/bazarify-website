@@ -36,7 +36,7 @@ function ProfileImageCard({ postedByUserId, userFirstName, userLastName, myId })
                 <img src={profileVector} className='w-[60px]' alt="" />
             </div>
             <div className='h-fit'>
-                <h2 className='text-xl text-brand-primary font-medium'>{userFirstName?.charAt(0).toUpperCase() + userFirstName?.slice(1)} {userLastName?.charAt(0).toUpperCase() + userLastName?.slice(1) || localStorage.getItem("firstName")}</h2>
+                <h2 className='text-xl text-brand-primary font-medium'>{localStorage.getItem("firstName")}</h2>
                 <p className='text-[12px] text-brand-primary font-medium'>View Public Profile</p>
                 <p className='text-[12px] text-brand-primary font-medium'>
                     <span className='flex items-center gap-1'>

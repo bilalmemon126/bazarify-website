@@ -5,7 +5,7 @@ import { FiMenu, FiSearch } from 'react-icons/fi'
 import { IoChatbubbleEllipsesOutline, IoLocationOutline } from 'react-icons/io5'
 import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { IoIosAddCircleOutline, IoMdArrowDropdown } from 'react-icons/io'
-import { FaCircle, FaRegHeart } from 'react-icons/fa'
+import { FaRegHeart } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutUser } from '../redux/features/user/userAction'
 import { AiOutlineProduct } from 'react-icons/ai'
@@ -15,6 +15,7 @@ import profileVector from '../assets/profile vector.jpg'
 import ProfileImageCard from '../components/ProfileImageCard'
 import { socket } from '../socket'
 import { getChatNotification } from '../redux/features/chat/chatAction'
+import { getFavouriteProducts } from '../redux/features/favourite/favouriteAction'
 
 function Header() {
   let [input, setInput] = useState({ productSearch: "", city: "" })
@@ -31,10 +32,15 @@ function Header() {
 
   const userId = localStorage.getItem("userId")
 
-  const { favouriteProducts } = useSelector((state) => state.favouriteProducts)
+  const { favouriteProducts, favouriteProductsMessage } = useSelector((state) => state.favouriteProducts)
   const { chatNotifications } = useSelector((state) => state.chat)
 
   const { location } = useSelector((state) => state.locationSlice)
+
+  useEffect(() => {
+    dispatch(getFavouriteProducts())
+  },[favouriteProductsMessage])
+
   useEffect(() => {
     dispatch(getLocation())
     dispatch(getChatNotification(userId))
@@ -150,7 +156,7 @@ function Header() {
           <div className={`${isOpen ? "block" : "hidden"} w-[300px] bg-white shadow-md rounded h-[300px] absolute top-20`} onClick={() => { setIsOpen(false) }}>
             <ProfileImageCard />
             <div className='h-fit flex items-center gap-2.5 border-b p-2.5 border-brand-dark bg-white'>
-              <NavLink to={`/myads/${localStorage.getItem("userId")}`}>
+              <NavLink to={`/myads/${localStorage.getItem("userId")}`} className={"w-full"}>
                 <div className='h-fit flex gap-2.5 items-center'>
                   <AiOutlineProduct className='text-2xl' />
                   <p className='text-md text-brand-primary font-medium'>My Ads</p>
@@ -158,7 +164,7 @@ function Header() {
               </NavLink>
             </div>
             <div className='h-fit flex items-center gap-2.5 border-b p-2.5 border-brand-dark bg-white'>
-              <NavLink to={`/addproduct/choosecategory`}>
+              <NavLink to={`/addproduct/choosecategory`} className={"w-full"}>
                 <div className='h-fit flex gap-2.5 items-center'>
                   <IoIosAddCircleOutline className='text-2xl' />
                   <p className='text-md text-brand-primary font-medium'>Sell Product</p>
@@ -167,7 +173,7 @@ function Header() {
             </div>
             <div className='h-fit flex items-center gap-2.5 border-b p-2.5 border-brand-dark bg-white'>
               <BiLogOut className='text-2xl' />
-              <p className='text-md text-brand-primary font-medium cursor-pointer' onClick={handleLogout}>Logout</p>
+              <p className='w-full text-md text-brand-primary font-medium cursor-pointer' onClick={handleLogout}>Logout</p>
             </div>
           </div>
         </div>

@@ -1,19 +1,23 @@
 import { useParams } from 'react-router-dom';
+import { getProductDetails, getProducts } from '../redux/features/products/productAction'
 import CardImages from '../components/CardImages'
 import Button from '../components/Button';
-import { getProductDetails } from '../redux/features/products/productAction';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import ProfileImageCard from '../components/ProfileImageCard';
+import ProductDetailsSkeleton from '../components/ProductDetailsSkeleton';
+import ProductSectionCard from '../components/ProductSectionCard';
+import ProductSectionCardSkeleton from '../components/ProductSectionCardSkeleton';
 
 function ProductDetails(props) {
-    const params = useParams()
-    const { id } = params;
+    const { id } = useParams()
     const dispatch = useDispatch()
+    let userId = localStorage.getItem("userId")
+    let [phoneNum, setPhoneNum] = useState("Call")
 
     useEffect(() => {
         dispatch(getProductDetails(id))
-    }, [])
+    }, [id])
 
     const handleDelete = async (productId) => {
         let response = await dispatch(deleteProduct(productId))
@@ -23,20 +27,31 @@ function ProductDetails(props) {
         }
     }
 
-    const { productDetails, productDetailsError, productDetailsLoading } = useSelector((state) => state.products)
+    const { products, productDetails, productDetailsError, productDetailsLoading, loading } = useSelector((state) => state.products)
+    console.log(productDetails)
 
-    return productDetailsLoading ? (
-        <p>loading...</p>
-    ) :
-        (
-            <>
-                {
+    useEffect(() => {
+        if (productDetails.data) {
+            dispatch(getProducts({ search: { category: productDetails?.data?.category.categoryName, productId: productDetails?.data._id }, id: userId }))
+        }
+    }, [productDetails])
+
+    const handleCallBtn = () => {
+        setPhoneNum(phoneNum === "Call" ? productDetails?.data?.createdBy.phone : "Call")
+    }
+
+    return (
+        <>
+            {
+                productDetailsLoading ? (
+                    <ProductDetailsSkeleton />
+                ) :
                     productDetails?.data ?
                         <>
                             <div className='grid grid-cols-12 my-5'>
                                 <div className='col-span-10 col-start-2 grid grid-cols-12 gap-y-10 items-center md:gap-10'>
                                     <div className='col-span-12 md:col-span-7'>
-                                        <CardImages images={productDetails?.data?.images} />
+                                        <CardImages images={productDetails?.data?.images} mainImage={productDetails?.data?.mainImage} />
                                     </div>
                                     <div className='col-span-12 grid grid-cols-1 gap-10 md:col-span-5'>
                                         <ProfileImageCard postedByUserId={productDetails?.data?.createdBy._id} userFirstName={productDetails?.data?.createdBy.firstName} userLastName={productDetails?.data?.createdBy.lastName} />
@@ -48,7 +63,7 @@ function ProductDetails(props) {
                                         {
                                             localStorage.getItem("userId") !== productDetails?.data?.createdBy._id ?
                                                 <div className='h-fit grid grid-cols-1 gap-2.5'>
-                                                    <Button btnText={"Call"} />
+                                                    <Button btnText={phoneNum} handleEvent={handleCallBtn} />
                                                     <Button btnText={"Chat"} btnPath={`/chat/${localStorage.getItem('userId')}/${id}`} />
                                                 </div> :
                                                 <div className='h-fit grid grid-cols-1 gap-2.5'>
@@ -66,13 +81,35 @@ function ProductDetails(props) {
                                     <div className='col-span-12 grid grid-cols-12'>
                                         <h1 className='text-3xl font-medium py-5 border-b col-span-12 border-brand-light'>Similar {productDetails?.data?.category.categoryName.charAt(0).toUpperCase() + productDetails?.data?.category.categoryName.slice(1)}</h1>
                                     </div>
+
+                                    <div className='col-span-12 grid grid-cols-12 gap-3.5'>
+                                        {
+                                            loading ? (
+                                                Array(4).fill(0).map((v, i) => (
+                                                    <div className='col-span-3' key={i}>
+                                                        <ProductSectionCardSkeleton />
+                                                    </div>
+                                                ))
+                                            ) :
+                                                products?.length === 0 ? (
+                                                    <p className='col-span-12 text-2xl text-black font-medium'>Product Not Found</p>
+                                                ) :
+                                                    products?.data?.map((v, i) => {
+                                                        return (
+                                                            <div className='col-span-3' key={i}>
+                                                                <ProductSectionCard image={v.mainImage.secure_url} price={v.price} title={v.title} productId={v._id} />
+                                                            </div>
+                                                        )
+                                                    })
+                                        }
+                                    </div>
                                 </div>
                             </div>
                         </> :
-                        <p>loading...</p>
-                }
-            </>
-        )
+                        <ProductDetailsSkeleton />
+            }
+        </>
+    )
 }
 
 export default ProductDetails

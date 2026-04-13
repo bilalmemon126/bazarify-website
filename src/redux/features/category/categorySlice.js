@@ -12,37 +12,37 @@ export const categorySlice = createSlice({
     extraReducers: (builder) => {
         builder
         .addCase(addCategory.pending, (state) => {
+            state.loading = true
             state.error = null
             state.category = []
-            state.loading = true
         })
         .addCase(addCategory.fulfilled, (state, action) => {
+            state.category = action.payload
             state.error = null
             state.loading = false
-            state.category = action.payload
 
         })
         .addCase(addCategory.rejected, (state, action) => {
             state.category = []
-            state.loading = false
             state.error = action.payload
+            state.loading = false
         })
 
         .addCase(getCategory.pending, (state) => {
+            state.loading = true
             state.error = null
             state.category = []
-            state.loading = true
         })
         .addCase(getCategory.fulfilled, (state, action) => {
+            state.category = action.payload
             state.error = null
             state.loading = false
-            state.category = action.payload
 
         })
         .addCase(getCategory.rejected, (state, action) => {
+            state.error = action.payload
             state.category = []
             state.loading = false
-            state.error = action.payload
         })
     }
 })

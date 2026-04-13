@@ -23,7 +23,7 @@ export const chatSlice = createSlice({
             state.chatResponse = ""
         })
         .addCase(getChat.fulfilled, (state, action) => {
-            state.productChats = action.payload.chats
+            state.productChats = action.payload.data
             state.chatResponse = action.payload.message
             state.chatLoading = false
 
@@ -40,7 +40,7 @@ export const chatSlice = createSlice({
             state.chatError = null
         })
         .addCase(getAllChats.fulfilled, (state, action) => {
-            state.allChats = action.payload.allChats
+            state.allChats = action.payload.data
             state.chatResponse = action.payload.message
             state.chatLoading = false
 
@@ -77,7 +77,7 @@ export const chatSlice = createSlice({
         .addCase(createChat.fulfilled, (state, action) => {
             state.chatLoading = false
             state.chatResponse = action.payload.message
-            state.chatId = action.payload.chatId
+            state.chatId = action.payload.data
 
         })
         .addCase(createChat.rejected, (state, action) => {

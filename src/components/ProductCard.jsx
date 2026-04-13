@@ -10,8 +10,8 @@ function ProductCard({ image, price, title, location, productId }) {
 
     const { favouriteProducts } = useSelector((state) => state.favouriteProducts)
 
-    const handleFavourite = (data) => {
-        dispatch(addFavouriteProducts(data))
+    const handleFavourite = (productId) => {
+        dispatch(addFavouriteProducts(productId))
     }
 
 

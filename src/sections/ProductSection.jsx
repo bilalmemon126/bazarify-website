@@ -2,39 +2,36 @@ import React, { useEffect } from 'react'
 import ProductSectionCard from '../components/ProductSectionCard'
 import { useDispatch, useSelector } from 'react-redux'
 import { getHomeProducts } from '../redux/features/products/productAction'
-import { useLocation, useNavigate } from 'react-router-dom'
+import ProductSectionCardSkeleton from '../components/ProductSectionCardSkeleton'
 
 function ProductSection() {
-
-    const { search } = useLocation()
-    const params = new URLSearchParams(search)
-    const navigate = useNavigate()
 
     const { homeProducts, homeProductsError, homeProductsLoading } = useSelector((state) => state.products)
     const dispatch = useDispatch()
 
+    let userId = localStorage.getItem('userId')
 
     useEffect(() => {
-        dispatch(getHomeProducts(search))
-    }, [search])
+        console.log("hello1")
+        dispatch(getHomeProducts(userId))
+    }, [userId])
 
-    let handleFilter = (key, value) => {
-        if (value) {
-            params.set(key, value)
-        }
-        else {
-            params.delete(key)
-        }
-        navigate(`?${params.toString()}`)
-    }
-
-    return homeProductsLoading ? (
-        <p>loading...</p>
-    ) :
-        (
+    return (
             <div className='grid grid-cols-12'>
                 <div className='col-span-10 col-start-2'>
                     {
+                        homeProductsLoading ? (
+                            Array(3).fill(0).map((_, i) => (
+                                <div key={i}>
+                                    <div className='h-9 w-48 bg-gray-200 animate-pulse rounded my-5' />
+                                    <div className='w-full grid grid-cols-1 gap-2.5 sm:grid-cols-2 md:grid-cols-4'>
+                                        {Array(4).fill(0).map((_, j) => (
+                                            <ProductSectionCardSkeleton key={j} />
+                                        ))}
+                                    </div>
+                                </div>
+                            ))
+                        ) :
                         homeProducts?.data?.map((v, i) => {
                             return (
                                 <div key={i}>

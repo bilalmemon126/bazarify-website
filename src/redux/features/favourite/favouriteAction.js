@@ -23,7 +23,6 @@ export const getFavouriteProducts = createAsyncThunk('getFavouriteProducts', asy
     }
 })
 
-
 export const addFavouriteProducts = createAsyncThunk('addFavouriteProducts', async (data, {rejectWithValue}) => {
     try{
         const response = await fetch(`${backendUrl}/favourite/${data}/${localStorage.getItem("userId")}`, {

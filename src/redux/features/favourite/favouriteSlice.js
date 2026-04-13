@@ -15,7 +15,6 @@ export const favouriteSlice = createSlice({
         .addCase(getFavouriteProducts.pending, (state) => {
             state.loading = true
             state.error = null
-            state.favouriteProducts = []
         })
         .addCase(getFavouriteProducts.fulfilled, (state, action) => {
             state.favouriteProducts = action.payload
@@ -24,14 +23,12 @@ export const favouriteSlice = createSlice({
 
         })
         .addCase(getFavouriteProducts.rejected, (state, action) => {
-            state.favouriteProducts = []
             state.error = action.payload
             state.loading = false
         })
 
         .addCase(addFavouriteProducts.pending, (state) => {
             state.loading = true
-            state.favouriteProducts = []
             state.error = null
             state.favouriteProductsMessage = ""
         })
@@ -43,7 +40,6 @@ export const favouriteSlice = createSlice({
         })
         .addCase(addFavouriteProducts.rejected, (state, action) => {
             state.favouriteProductsMessage = ""
-            state.favouriteProducts = []
             state.error = action.payload
             state.loading = false
         })

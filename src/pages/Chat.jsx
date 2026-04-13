@@ -18,6 +18,7 @@ function Chat() {
 
     const [open, setOpen] = useState(false)
     const [messages, setMessages] = useState([])
+    const [getRoomId, setGetRoomId] = useState([])
     let [roomAndProductId, setRoomAndProductId] = useState({ roomId: null, productId: null })
     const dispatch = useDispatch()
     let [input, setInput] = useState("")
@@ -34,12 +35,22 @@ function Chat() {
     }, [])
 
     useEffect(() => {
-        if (productId) {
-            let getRoomId = allChats.filter(v => v.productId._id === productId && v.buyerId._id === myChatId)
-            getRoomId?.length > 0 &&
-                dispatch(getChat({ productId, userId: myChatId, roomId: getRoomId[0].roomId }))
+        if (productId && allChats?.length > 0 && myChatId) {
+            const filteredRooms = allChats.filter(
+                v => v.productId?._id === productId && v.buyerId?._id === myChatId
+            );
+    
+            setGetRoomId(filteredRooms);
+    
+            if (filteredRooms.length > 0) {
+                dispatch(getChat({
+                    productId,
+                    userId: myChatId,
+                    roomId: filteredRooms[0]?.roomId
+                }));
+            }
         }
-    }, [])
+    }, [productId, allChats, myChatId]);
 
     useEffect(() => {
         if (productId || roomAndProductId.productId) {
